@@ -5,6 +5,9 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { SITE_CONFIG } from '@/lib/constants'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
+
+const FEATURE_ITEM = { label: 'More', href: '/photography' }
 
 const NAV_ITEMS = [
   { label: 'Home', href: '/#hero' },
@@ -75,12 +78,23 @@ export function Navbar() {
   return (
     <nav className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur">
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="font-bold text-xl text-accent">
-            {SITE_CONFIG.shortName}
-          </Link>
+        <div className="grid h-16 grid-cols-[1fr_auto_1fr] items-center">
+          <div className="flex items-center gap-4">
+            <Link
+              href={FEATURE_ITEM.href}
+              className={`text-sm font-medium transition-colors hover:text-accent ${
+                pathname === FEATURE_ITEM.href ? 'text-accent' : 'text-muted-foreground'
+              }`}
+            >
+              {FEATURE_ITEM.label}
+            </Link>
 
-          <div className="flex items-center gap-6">
+            <Link href="/" className="font-bold text-xl text-accent">
+              {SITE_CONFIG.shortName}
+            </Link>
+          </div>
+
+          <div className="flex items-center justify-center gap-6">
             {NAV_ITEMS.map((item) => {
               const isAnchor = item.href.startsWith('/#')
               const isActive = isAnchor
@@ -100,6 +114,10 @@ export function Navbar() {
                 </Link>
               )
             })}
+          </div>
+
+          <div className="flex items-center justify-end">
+            <ThemeToggle />
           </div>
         </div>
       </div>

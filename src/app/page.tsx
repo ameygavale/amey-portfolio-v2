@@ -1,16 +1,11 @@
-import Link from 'next/link'
-import Image from 'next/image'
-import {
-  Github,
-  Linkedin,
-  Mail,
-  MapPin,
-  ArrowRight,
-  Download
-} from 'lucide-react'
+import { Mail, Linkedin, ArrowRight } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { ProjectCard } from '@/components/ui/project-card'
+import { HeroSection } from '@/components/home/hero-section'
+import { AboutSection } from '@/components/home/about-section'
+import type { HighlightItem } from '@/components/home/about-section'
+import { ProjectsShowcase } from '@/components/home/projects-showcase'
+import { ExperienceSection } from '@/components/home/experience-section'
 import {
   SITE_CONFIG,
   PROJECTS,
@@ -19,106 +14,52 @@ import {
   SKILLS
 } from '@/lib/constants'
 
+const ABOUT_HIGHLIGHTS: HighlightItem[] = [
+  {
+    title: 'Ship-ready autonomy stacks',
+    description:
+      'Builds full autonomy pipelines—perception, mapping, and planning—that survive outdoors where weather and comms fail.',
+    icon: 'cpu'
+  },
+  {
+    title: 'Field-proven deployments',
+    description:
+      'Delivered robots that navigate farms, lakes, and urban test beds with repeatable performance and documented playbooks.',
+    icon: 'route'
+  },
+  {
+    title: 'Sensing under uncertainty',
+    description:
+      'Fuses LiDAR, stereo, and GNSS for resilient localization when lighting shifts or GPS fades out.',
+    icon: 'waves'
+  }
+]
+
+const ABOUT_STATS = [
+  {
+    label: 'Real-world deployments',
+    value: '12+',
+    detail: 'Across agricultural robots, marine vessels, and autonomous shuttles.'
+  },
+  {
+    label: 'SLAM & perception stacks',
+    value: '5',
+    detail: 'Designed and benchmarked across ROS2, Gazebo, and embedded compute.'
+  },
+  {
+    label: 'Team leadership',
+    value: '5 engineers',
+    detail: 'Mentored graduate and undergraduate teams from concept to field ops.'
+  }
+]
+
 export default function Home() {
   const phoneHref = SITE_CONFIG.phone.replace(/[^\d+]/g, '')
   return (
     <main className="flex flex-col gap-24 pb-24">
-      <section
-        id="hero"
-        className="relative overflow-hidden bg-white pb-28 pt-24 text-slate-900"
-      >
-        <div className="container relative mx-auto flex flex-col items-center gap-12 px-4 text-center">
-          <div className="relative h-auto w-full max-w-xl overflow-hidden rounded-[220px] shadow-2xl">
-            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[200px]">
-              <Image
-                src={SITE_CONFIG.headshotUrl}
-                alt="Portrait of Amey Gavale"
-                fill
-                className="object-cover"
-                sizes="(min-width: 768px) 400px, 80vw"
-                priority
-              />
-            </div>
-          </div>
+      <HeroSection site={SITE_CONFIG} />
 
-          <div className="space-y-8 md:space-y-10">
-            <div className="space-y-5 md:space-y-6">
-              <span className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-4 py-1.5 text-sm font-medium text-sky-700">
-                <span className="h-2 w-2 rounded-full bg-sky-500" />
-                {SITE_CONFIG.tagline}
-              </span>
-              <h1 className="mt-12 mb-8 text-4xl font-semibold leading-tight md:mt-16 md:mb-10 md:text-5xl">
-                {SITE_CONFIG.name}
-              </h1>
-              <p className="mx-auto max-w-2xl text-lg text-slate-600 md:text-xl">
-                {SITE_CONFIG.description}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-4 py-3 md:gap-5 md:py-4">
-              <Button asChild size="lg">
-                <a
-                  href={SITE_CONFIG.resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  download
-                >
-                  <Download className="h-4 w-4" />
-                  Download Resume
-                </a>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-slate-300 text-slate-900 hover:bg-slate-100"
-              >
-                <a href={`mailto:${SITE_CONFIG.email}`}>
-                  <Mail className="h-4 w-4" />
-                  Let&apos;s Collaborate
-                </a>
-              </Button>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-5 py-2 text-sm text-slate-600 md:py-3 md:text-base">
-              <span className="inline-flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-sky-500" />
-                {SITE_CONFIG.location}
-              </span>
-              <Link
-                href={SITE_CONFIG.github}
-                className="inline-flex items-center gap-2 transition hover:text-slate-900"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Github className="h-4 w-4" />
-                GitHub
-              </Link>
-              <Link
-                href={SITE_CONFIG.linkedin}
-                className="inline-flex items-center gap-2 transition hover:text-slate-900"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Linkedin className="h-4 w-4" />
-                LinkedIn
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="about" className="container mx-auto px-4">
-        <div className="mx-auto max-w-3xl space-y-4">
-          <h2 className="text-3xl font-semibold">About</h2>
-          <p className="text-lg text-muted-foreground">
-            I build autonomy stacks that work outside the lab. From multi-robot coordination to perception pipelines, my focus is creating production-ready robotics software that can be trusted in the field—where weather, lighting, and communication rarely cooperate.
-          </p>
-          <p className="text-lg text-muted-foreground">
-            My toolkit blends classical estimation, optimization-driven planning, and modern machine learning. I thrive where systems engineering meets research, bringing ideas from simulation into deployments that run for hours at a time.
-          </p>
-        </div>
-      </section>
+      <AboutSection highlights={ABOUT_HIGHLIGHTS} stats={ABOUT_STATS} />
 
       <section id="skills" className="bg-muted/30 py-16">
         <div className="container mx-auto px-4">
@@ -156,61 +97,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="experience" className="container mx-auto px-4">
-        <div className="mb-10 max-w-2xl">
-          <h2 className="text-3xl font-semibold">Experience</h2>
-          <p className="mt-2 text-muted-foreground">
-            Leading autonomy projects from proof-of-concept to production deployments across agricultural, aerial, and automotive robotics domains.
-          </p>
-        </div>
-        <div className="space-y-8">
-          {EXPERIENCE.map((role) => (
-            <article
-              key={`${role.company}-${role.startDate}`}
-              className="grid gap-6 rounded-3xl border bg-background p-6 shadow-sm md:grid-cols-[1.1fr_2fr]"
-            >
-              <div>
-                <p className="text-sm font-semibold text-primary">{role.startDate} – {role.endDate}</p>
-                <h3 className="mt-2 text-xl font-semibold">{role.role}</h3>
-                <p className="text-muted-foreground">{role.company}</p>
-                <p className="mt-1 text-sm text-muted-foreground">{role.location}</p>
-              </div>
-              <ul className="space-y-3 text-sm text-muted-foreground">
-                {role.achievements.map((achievement) => (
-                  <li key={achievement} className="flex gap-2">
-                    <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
-                    <span>{achievement}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-      </section>
+      <ExperienceSection roles={EXPERIENCE} />
 
-      <section id="projects" className="bg-muted/30 py-16">
-        <div className="container mx-auto px-4">
-          <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 className="text-3xl font-semibold">Featured Projects</h2>
-              <p className="mt-2 max-w-2xl text-muted-foreground">
-                Systems I&apos;ve architected and delivered—combining autonomy, perception, and simulation workflows to unlock new capabilities.
-              </p>
-            </div>
-            <Button asChild variant="outline">
-              <Link href="/projects">
-                Explore project archive
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {PROJECTS.map((project) => (
-              <ProjectCard key={project.id} {...project} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <ProjectsShowcase projects={PROJECTS} />
 
       <section id="education" className="container mx-auto px-4">
         <div className="mb-10 max-w-2xl">
@@ -244,7 +133,7 @@ export default function Home() {
             <div className="space-y-4">
               <h2 className="text-3xl font-semibold">Let&apos;s build the next robot together.</h2>
               <p className="text-slate-200">
-                I&apos;m exploring full-time opportunities for 2024 focused on autonomy, perception, and multi-robot systems. If you&apos;re pushing the frontier of embodied intelligence, I&apos;d love to chat.
+                I&apos;m exploring full-time opportunities for 2025/26 focused on autonomy, perception, and multi-robot systems. If you&apos;re pushing the frontier of Autonomy &amp; Robotics, I&apos;d love to chat.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button asChild size="lg" className="bg-white text-slate-900 hover:bg-white/90">
@@ -253,7 +142,7 @@ export default function Home() {
                     Email Me
                   </a>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                <Button asChild size="lg" className="bg-white text-slate-900 hover:bg-white/90">
                   <a href={SITE_CONFIG.linkedin} target="_blank" rel="noopener noreferrer">
                     <Linkedin className="h-4 w-4" />
                     Connect on LinkedIn
