@@ -1,8 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
+## Local Development
 
 ```bash
 npm run dev
@@ -14,23 +10,26 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) after the server starts. Editing files under `src/` triggers automatic reloads.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Video Hosting
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Project demo videos are hosted outside the repository. Configure the base URL using an environment variable before running the app:
 
-## Learn More
+```bash
+NEXT_PUBLIC_MEDIA_BASE_URL="https://storage.googleapis.com/YOUR_BUCKET_NAME"
+```
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` file for local development or set the variable in your deployment target. If the variable is not defined the app will look for videos under `/videos/...`; you can keep local MP4s in `public/videos/` for offline use (that folder is ignored by Git).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Useful Commands
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Build the app for production |
+| `npm run lint` | Run ESLint checks |
 
-## Deploy on Vercel
+## Deployment Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+When deploying (Vercel, Netlify, Google Cloud Run, etc.), remember to set `NEXT_PUBLIC_MEDIA_BASE_URL` so the hosted videos load correctly.

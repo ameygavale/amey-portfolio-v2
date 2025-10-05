@@ -38,7 +38,7 @@ function ProjectMedia({ media, title }: { media?: ProjectMedia | null; title: st
     )
   }
 
-  if (media.type === 'local') {
+  if (media.type === 'file') {
     const sources = Array.isArray(media.src) ? media.src : [media.src]
 
     return (

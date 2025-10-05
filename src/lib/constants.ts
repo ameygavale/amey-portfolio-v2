@@ -12,9 +12,29 @@ export const SITE_CONFIG = {
   headshotUrl: '/images/photo.jpg',
 }
 
+const MEDIA_BASE_URL = process.env.NEXT_PUBLIC_MEDIA_BASE_URL?.replace(/\/$/, '')
+
+export function buildVideoSource(path: string): string {
+  if (!path) {
+    return path
+  }
+
+  if (/^https?:\/\//.test(path)) {
+    return path
+  }
+
+  const normalised = path.replace(/^\/+/, '')
+
+  if (MEDIA_BASE_URL) {
+    return `${MEDIA_BASE_URL}/${normalised}`
+  }
+
+  return `/videos/${normalised}`
+}
+
 export type ProjectMedia =
   | {
-      type: 'local'
+      type: 'file'
       src: string | string[]
       poster?: string
     }
@@ -49,8 +69,8 @@ export const PROJECTS: ProjectConfig[] = [
     demo: '',
     category: 'Field Robotics',
     media: {
-      type: 'local',
-      src: '/videos/amiga_vid.mp4'
+      type: 'file',
+      src: buildVideoSource('amiga_vid.mp4')
     }
   },
   {
@@ -65,8 +85,8 @@ export const PROJECTS: ProjectConfig[] = [
     demo: '',
     category: 'Marine Robotics',
     media: {
-      type: 'local',
-      src: '/videos/blueboat_vid.mp4'
+      type: 'file',
+      src: buildVideoSource('blueboat_vid.mp4')
     }
   },
   {
@@ -81,8 +101,8 @@ export const PROJECTS: ProjectConfig[] = [
     demo: '',
     category: 'Autonomous Vehicles',
     media: {
-      type: 'local',
-      src: ['/videos/gem1_vid.mp4', '/videos/gem2_vid.mp4']
+      type: 'file',
+      src: [buildVideoSource('gem1_vid.mp4'), buildVideoSource('gem2_vid.mp4')]
     }
   },
   {
