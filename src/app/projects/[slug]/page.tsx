@@ -1,94 +1,41 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, ExternalLink, Github, Play } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
 
-import { PROJECTS, type ProjectMedia } from '@/lib/constants'
+import { PROJECTS } from '@/lib/constants'
 
-function extractYouTubeId(url: string): string | null {
-  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]+)/)
-  if (match && match[1]) {
-    return match[1]
-  }
-
-  const urlObj = new URL(url)
-  const idFromQuery = urlObj.searchParams.get('v')
-
-  return idFromQuery
-}
-
-function getYouTubeEmbedUrl(url: string): string | null {
+function getEmbeddedVideoUrl(url: string): string | null {
   try {
-    const videoId = extractYouTubeId(url)
-    return videoId ? `https://www.youtube.com/embed/${videoId}` : null
+    const parsed = new URL(url)
+    const host = parsed.hostname.replace('www.', '')
+
+    if (host === 'youtu.be') {
+      const videoId = parsed.pathname.replace('/', '')
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : null
+    }
+
+    if (host === 'youtube.com') {
+      if (parsed.pathname === '/watch') {
+        const videoId = parsed.searchParams.get('v')
+        return videoId ? `https://www.youtube.com/embed/${videoId}` : null
+      }
+
+      if (parsed.pathname.startsWith('/embed/')) {
+        return url
+      }
+
+      if (parsed.pathname.startsWith('/shorts/')) {
+        const segments = parsed.pathname.split('/')
+        const videoId = segments[segments.length - 1]
+        return videoId ? `https://www.youtube.com/embed/${videoId}` : null
+      }
+    }
+
+    return url
   } catch {
     return null
   }
-}
-
-function ProjectMedia({ media, title }: { media?: ProjectMedia | null; title: string }) {
-  if (!media) {
-    return (
-      <div className="mt-12 rounded-2xl border border-dashed border-muted-foreground/40 bg-muted/30 p-12 text-center text-muted-foreground">
-        <p className="flex items-center justify-center gap-3 text-base">
-          <Play className="h-5 w-5" />
-          Demo video coming soon.
-        </p>
-      </div>
-    )
-  }
-
-  if (media.type === 'file') {
-    const sources = Array.isArray(media.src) ? media.src : [media.src]
-
-    return (
-      <div className="mt-12 space-y-8">
-        {sources.map((source, index) => (
-          <div
-            key={`${source}-${index}`}
-            className="overflow-hidden rounded-2xl bg-black shadow-xl"
-          >
-            <video
-              controls
-              preload="metadata"
-              poster={media.poster}
-              className="h-auto w-full"
-            >
-              <source src={source} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        ))}
-      </div>
-    )
-  }
-
-  const embedUrl = getYouTubeEmbedUrl(media.src)
-
-  if (!embedUrl) {
-    return (
-      <div className="mt-12 rounded-2xl border border-dashed border-muted-foreground/40 bg-muted/30 p-12 text-center text-muted-foreground">
-        <p className="flex items-center justify-center gap-3 text-base">
-          <Play className="h-5 w-5" />
-          Unable to load the linked demo video. Please verify the YouTube URL.
-        </p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="mt-12 overflow-hidden rounded-2xl shadow-xl">
-      <div className="aspect-video bg-black">
-        <iframe
-          src={embedUrl}
-          title={`${title} demo video`}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          className="h-full w-full"
-        />
-      </div>
-    </div>
-  )
 }
 
 export function generateStaticParams() {
@@ -117,6 +64,7 @@ export function generateMetadata({ params }: ProjectPageProps) {
 
 export default function ProjectDetailPage({ params }: ProjectPageProps) {
   const project = PROJECTS.find((item) => item.slug === params.slug) ?? notFound()
+  const videoLinks = project.videoLinks?.filter(Boolean) ?? []
 
   return (
     <main className="min-h-screen bg-background py-16">
@@ -197,8 +145,49 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
             )}
           </div>
         </section>
+        <section className="mt-10 rounded-3xl border border-border bg-card p-8 shadow-xl md:p-12">
+          <h2 className="text-2xl font-semibold text-card-foreground">Project Videos</h2>
+          {videoLinks.length > 0 ? (
+            <div className="mt-6 grid gap-6 md:grid-cols-2">
+              {videoLinks.map((link, index) => {
+                const embeddedUrl = getEmbeddedVideoUrl(link)
+                const title = `${project.title} video ${index + 1}`
 
-        <ProjectMedia media={project.media} title={project.title} />
+                return (
+                  <div
+                    key={`${link}-${index}`}
+                    className="flex flex-col gap-3"
+                  >
+                    {embeddedUrl ? (
+                      <div className="relative aspect-video overflow-hidden rounded-2xl bg-muted">
+                        <iframe
+                          src={embeddedUrl}
+                          title={title}
+                          loading="lazy"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                          className="h-full w-full"
+                        />
+                      </div>
+                    ) : (
+                      <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2 text-sm font-medium text-primary transition-colors hover:border-primary hover:text-primary/80"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                        Open video
+                      </a>
+                    )}
+                  </div>
+                )}
+              )}
+            </div>
+          ) : (
+            <p className="mt-4 text-muted-foreground">Visuals coming soon.</p>
+          )}
+        </section>
       </div>
     </main>
   )

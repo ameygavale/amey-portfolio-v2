@@ -6,7 +6,7 @@ import type { ProjectConfig } from '@/lib/constants'
 
 type ProjectCardProps = Pick<
   ProjectConfig,
-  'title' | 'description' | 'image' | 'technologies' | 'github' | 'demo' | 'category' | 'slug' | 'media'
+  'title' | 'description' | 'image' | 'technologies' | 'github' | 'demo' | 'category' | 'slug' | 'media' | 'videoLinks'
 >
 
 export function ProjectCard({
@@ -18,14 +18,16 @@ export function ProjectCard({
   demo,
   category,
   slug,
-  media
+  media,
+  videoLinks
 }: ProjectCardProps) {
   const hasImage = Boolean(image)
-  const hasVideoMedia = Boolean(media)
+  const normalizedVideoLinks = videoLinks?.filter(Boolean) ?? []
+  const hasVideoMedia = Boolean(media) || normalizedVideoLinks.length > 0
 
   return (
-    <div className="group overflow-hidden rounded-2xl border border-border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-      <div className="relative h-48 w-full bg-muted">
+    <div className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 text-card-foreground transition-all duration-300 hover:-translate-y-2 hover:border-primary/40 hover:shadow-[0_22px_70px_rgba(28,96,132,0.45)]">
+      <div className="relative h-48 w-full overflow-hidden rounded-t-[2rem] bg-slate-900/20">
         {hasImage ? (
           <Image
             src={image as string}
@@ -38,6 +40,7 @@ export function ProjectCard({
             Visual coming soon
           </div>
         )}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/15 to-transparent transition-opacity duration-300 group-hover:from-slate-950/85 group-hover:via-slate-950/25" />
         <Link
           href={`/projects/${slug}`}
           className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100"
@@ -54,21 +57,21 @@ export function ProjectCard({
           )}
         </Link>
         <div className="absolute top-4 right-4">
-          <span className="rounded-full bg-primary px-3 py-1 text-sm font-medium text-primary-foreground shadow-sm">
+          <span className="rounded-full border border-white/20 bg-black/70 px-3 py-1 text-xs font-semibold tracking-[0.18em] text-white shadow-lg">
             {category}
           </span>
         </div>
       </div>
 
-      <div className="p-6">
-        <h3 className="mb-2 text-2xl font-semibold text-card-foreground">{title}</h3>
-        <p className="mb-4 text-muted-foreground">{description}</p>
+      <div className="space-y-5 p-6">
+        <h3 className="text-2xl font-semibold text-card-foreground">{title}</h3>
+        <p className="text-muted-foreground">{description}</p>
 
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2">
           {technologies.map((tech) => (
             <span
               key={tech}
-              className="rounded-md bg-muted px-3 py-1 text-sm text-muted-foreground"
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium tracking-[0.12em] text-muted-foreground"
             >
               {tech}
             </span>
@@ -98,11 +101,23 @@ export function ProjectCard({
               <span>Demo</span>
             </a>
           )}
+          {normalizedVideoLinks.map((link, index) => (
+            <a
+              key={`${link}-${index}`}
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-muted-foreground transition-colors hover:text-primary"
+            >
+              <Video size={20} />
+              <span>{normalizedVideoLinks.length > 1 ? `Video ${index + 1}` : 'Video'}</span>
+            </a>
+          ))}
         </div>
 
         <Link
           href={`/projects/${slug}`}
-          className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
         >
           View project details
           <Play className="h-4 w-4" />

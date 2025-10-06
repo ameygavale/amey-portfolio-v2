@@ -23,9 +23,10 @@ interface HeroSectionProps {
 }
 
 const floatingIndicators = [
-  { delay: 0, top: '12%', left: '18%' },
-  { delay: 1.4, top: '68%', left: '78%' },
-  { delay: 0.7, top: '72%', left: '6%' }
+  { delay: 0, top: '16%', left: '18%' },
+  { delay: 1.2, top: '68%', left: '68%' },
+  { delay: 0.9, top: '72%', left: '8%' },
+  { delay: 1.8, top: '38%', left: '88%' }
 ]
 
 export function HeroSection({ site }: HeroSectionProps) {
@@ -36,7 +37,6 @@ export function HeroSection({ site }: HeroSectionProps) {
     damping: 20,
     mass: 0.6
   })
-
   const spotlightBackground = useMotionTemplate`
     radial-gradient(650px circle at ${spotlightX}% ${spotlightY}%, rgba(56,189,248, ${spotlightIntensity}), transparent 70%)
   `
@@ -63,7 +63,7 @@ export function HeroSection({ site }: HeroSectionProps) {
   return (
     <motion.section
       id="hero"
-      className="relative overflow-hidden bg-background pb-28 pt-24 text-foreground"
+      className="relative isolate overflow-hidden bg-background pb-28 pt-28 text-foreground"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
       initial={{ opacity: 0, y: 20 }}
@@ -77,16 +77,37 @@ export function HeroSection({ site }: HeroSectionProps) {
         transition={{ duration: 0.4, ease: 'easeOut' }}
       />
 
+      <div className="pointer-events-none absolute inset-0 -z-20">
+        <div className="absolute -top-32 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-primary/25 blur-[140px]" />
+        <div className="absolute top-[46%] right-[-18%] h-[520px] w-[520px] rounded-full bg-secondary/25 blur-[160px]" />
+        <div className="absolute bottom-[-35%] left-[6%] h-[420px] w-[420px] rounded-full bg-accent/25 blur-[140px]" />
+      </div>
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 opacity-45"
+        style={{
+          backgroundImage:
+            'linear-gradient(120deg, rgba(145, 222, 255, 0.06) 0%, rgba(145, 222, 255, 0) 32%), linear-gradient(300deg, rgba(183, 149, 255, 0.05) 10%, rgba(183, 149, 255, 0) 48%)'
+        }}
+      />
+      <div
+        className="pointer-events-none absolute inset-0 -z-[5] opacity-40"
+        style={{
+          backgroundImage:
+            'linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.035) 1px, transparent 1px)',
+          backgroundSize: '120px 120px'
+        }}
+      />
+
       {floatingIndicators.map((item, index) => (
         <motion.span
           key={index}
-          className="pointer-events-none absolute hidden rounded-full bg-sky-300/60 shadow-lg md:block"
-          style={{ width: 14, height: 14, top: item.top, left: item.left }}
-          initial={{ opacity: 0.3, scale: 0.8, y: -10 }}
+          className="pointer-events-none absolute hidden rounded-full border border-primary/40 bg-primary/40 shadow-[0_0_25px_rgba(72,216,255,0.35)] backdrop-blur md:block"
+          style={{ width: 18, height: 18, top: item.top, left: item.left }}
+          initial={{ opacity: 0.25, scale: 0.8, y: -10 }}
           animate={{
-            opacity: [0.3, 0.85, 0.3],
-            scale: [0.8, 1.2, 0.8],
-            y: [-10, 12, -10]
+            opacity: [0.28, 0.9, 0.28],
+            scale: [0.8, 1.24, 0.8],
+            y: [-14, 16, -14]
           }}
           transition={{
             duration: 6,
@@ -97,59 +118,60 @@ export function HeroSection({ site }: HeroSectionProps) {
         />
       ))}
 
-      <div className="container relative mx-auto flex flex-col items-center gap-12 px-4 text-center">
+      <div className="container relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-16 px-4 text-center md:flex-row md:items-stretch md:gap-20 md:text-left">
         <motion.div
-          className="relative h-auto w-full max-w-xl overflow-hidden rounded-[220px] shadow-2xl"
+          className="order-1 h-full w-full max-w-sm md:order-2"
           initial={{ opacity: 0, scale: 0.92, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.7, ease: 'easeOut' }}
         >
           <motion.div
-            className="relative aspect-[3/4] w-full overflow-hidden rounded-[200px]"
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
+            className="relative aspect-[3/4] w-full overflow-hidden rounded-[3rem] border border-white/10 bg-white/5 shadow-[0_40px_120px_rgba(32,74,109,0.45)] backdrop-blur-xl"
+            whileHover={{ scale: 1.04 }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
           >
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
             <Image
               src={site.headshotUrl}
               alt={`Portrait of ${site.name}`}
               fill
               className="object-cover"
-              sizes="(min-width: 768px) 400px, 80vw"
+              sizes="(min-width: 768px) 420px, 80vw"
               priority
             />
           </motion.div>
         </motion.div>
 
         <motion.div
-          className="space-y-8 md:space-y-10"
+          className="order-2 flex w-full max-w-2xl flex-col justify-center space-y-10 md:order-1"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.6, ease: 'easeOut' }}
         >
           <motion.div
-            className="space-y-5 md:space-y-6"
+            className="space-y-6"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5, ease: 'easeOut' }}
           >
-            <span className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-4 py-1.5 text-sm font-medium text-sky-700">
+            <span className="inline-flex items-center gap-3 rounded-full border border-primary/40 bg-primary/15 px-5 py-2 text-sm font-medium text-primary">
               <motion.span
-                className="h-2 w-2 rounded-full bg-sky-500"
+                className="h-2 w-2 rounded-full bg-primary"
                 animate={{ scale: [1, 1.5, 1] }}
                 transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
               />
               {site.tagline}
             </span>
-            <h1 className="mt-12 mb-8 text-4xl font-semibold leading-tight md:mt-16 md:mb-10 md:text-5xl">
+            <h1 className="text-4xl font-semibold leading-tight text-foreground md:text-6xl">
               {site.name}
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground md:text-xl">
+            <p className="text-lg text-muted-foreground md:text-xl">
               {site.description}
             </p>
           </motion.div>
 
           <motion.div
-            className="flex flex-wrap items-center justify-center gap-4 py-3 md:gap-5 md:py-4"
+            className="flex flex-wrap items-center gap-4 py-3 md:gap-5 md:py-4"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.4, ease: 'easeOut' }}
@@ -163,18 +185,18 @@ export function HeroSection({ site }: HeroSectionProps) {
           </motion.div>
 
           <motion.div
-            className="flex flex-wrap items-center justify-center gap-5 py-2 text-sm text-muted-foreground md:py-3 md:text-base"
+            className="flex flex-wrap items-center gap-6 py-2 text-sm text-muted-foreground md:py-3 md:text-base"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.45, ease: 'easeOut' }}
           >
-            <span className="inline-flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-sky-500" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-2">
+              <MapPin className="h-4 w-4 text-primary" />
               {site.location}
             </span>
             <Link
               href={site.github}
-              className="inline-flex items-center gap-2 transition hover:text-foreground"
+              className="inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-2 transition hover:border-primary/50 hover:text-foreground"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -183,7 +205,7 @@ export function HeroSection({ site }: HeroSectionProps) {
             </Link>
             <Link
               href={site.linkedin}
-              className="inline-flex items-center gap-2 transition hover:text-foreground"
+              className="inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-2 transition hover:border-primary/50 hover:text-foreground"
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -12,48 +12,18 @@ export const SITE_CONFIG = {
   headshotUrl: '/images/photo.jpg',
 }
 
-const MEDIA_BASE_URL = process.env.NEXT_PUBLIC_MEDIA_BASE_URL?.replace(/\/$/, '')
-
-export function buildVideoSource(path: string): string {
-  if (!path) {
-    return path
-  }
-
-  if (/^https?:\/\//.test(path)) {
-    return path
-  }
-
-  const normalised = path.replace(/^\/+/, '')
-
-  if (MEDIA_BASE_URL) {
-    return `${MEDIA_BASE_URL}/${normalised}`
-  }
-
-  return `/videos/${normalised}`
-}
-
-export type ProjectMedia =
-  | {
-      type: 'file'
-      src: string | string[]
-      poster?: string
-    }
-  | {
-      type: 'youtube'
-      src: string
-    }
-
 export type ProjectConfig = {
   id: number | string
   slug: string
   title: string
   description: string
   image?: string | null
+  media?: string | null
+  videoLinks?: string[]
   technologies: string[]
   github?: string
   demo?: string
   category: string
-  media?: ProjectMedia | null
 }
 
 export const PROJECTS: ProjectConfig[] = [
@@ -64,14 +34,11 @@ export const PROJECTS: ProjectConfig[] = [
     description:
       'Delivered the perception and navigation stack for the AMiGA phenotyping robot, enabling over-the-row canopy scans with stereo depth alignment and automated trait logging.',
     image: '/images/projects/amiga.jpg',
+    videoLinks: ['https://youtu.be/uUrYV-Pjc2o?si=t7Rh3tMfkidtoS3q'],
     technologies: ['ROS2', 'Stereo Vision', 'Depth Mapping', 'Navigation'],
     github: '',
     demo: '',
-    category: 'Field Robotics',
-    media: {
-      type: 'file',
-      src: buildVideoSource('amiga_vid.mp4')
-    }
+    category: 'Field Robotics'
   },
   {
     id: 2,
@@ -80,14 +47,11 @@ export const PROJECTS: ProjectConfig[] = [
     description:
       'Engineered a BlueBoat USV autonomy suite with mission planning, docking controller, and multi-sensor fusion that sustained reliable operations in wave-disturbed trials.',
     image: '/images/projects/blueboat.jpg',
+    videoLinks: ['https://youtu.be/6SlrlSspAqo?si=B_Cv_zZoPdQyid_P'],
     technologies: ['ROS2', 'Gazebo', 'Sensor Fusion', 'Marine Control'],
     github: '',
     demo: '',
-    category: 'Marine Robotics',
-    media: {
-      type: 'file',
-      src: buildVideoSource('blueboat_vid.mp4')
-    }
+    category: 'Marine Robotics'
   },
   {
     id: 3,
@@ -96,14 +60,14 @@ export const PROJECTS: ProjectConfig[] = [
     description:
       'Integrated LiDAR, stereo vision, and MPC-based control on the GEM e4 platform to deliver dependable lane keeping with real-time pedestrian detection in urban scenarios.',
     image: '/images/projects/gem.jpg',
+    videoLinks: [
+      'https://youtu.be/msFjLbViays?si=tW4hoYTwKkfxVb6y',
+      'https://youtu.be/Vv8QWqIuXAg?si=-klAdv1BJEsuKisO'
+    ],
     technologies: ['ROS2', 'MPC', 'LiDAR', 'Perception'],
     github: '',
     demo: '',
-    category: 'Autonomous Vehicles',
-    media: {
-      type: 'file',
-      src: [buildVideoSource('gem1_vid.mp4'), buildVideoSource('gem2_vid.mp4')]
-    }
+    category: 'Autonomous Vehicles'
   },
   {
     id: 4,
@@ -124,14 +88,11 @@ export const PROJECTS: ProjectConfig[] = [
     description:
       'Built a UR3-based sorting cell with inverse kinematics and camera feedback to classify multi-color parcels in under a minute, ready for barcode and AMR integration.',
     image: '/images/projects/ur3.jpg',
+    videoLinks: ['https://youtu.be/YwfYYCGnCqc?si=_vLO_1k7uKLb18q0'],
     technologies: ['ROS', 'OpenCV', 'Inverse Kinematics', 'Automation'],
     github: '',
     demo: '',
-    category: 'Industrial Automation',
-    media: {
-      type: 'youtube',
-      src: 'https://youtu.be/YwfYYCGnCqc?si=sUDT8KcicAdrjZHM'
-    }
+    category: 'Industrial Automation'
   },
   {
     id: 6,
