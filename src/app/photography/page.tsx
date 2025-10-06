@@ -1,37 +1,27 @@
-import Image from "next/image"
-import { PHOTOGRAPHY_COLLECTION } from "@/lib/constants"
+import fs from "fs/promises"
+import path from "path"
+import { PhotoGallery } from "./photo-gallery"
 
 export const metadata = { title: "Photography" }
 
-export default function PhotographyPage() {
+const PHOTOGRAPHY_DIR = path.join(process.cwd(), "public/images/photography")
+const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif"]) // allow common web formats
+
+async function getPhotoSources() {
+  const items = await fs.readdir(PHOTOGRAPHY_DIR)
+
+  return items
+    .filter(item => IMAGE_EXTENSIONS.has(path.extname(item).toLowerCase()))
+    .sort((a, b) => a.localeCompare(b))
+    .map(item => `/images/photography/${encodeURIComponent(item)}`)
+}
+
+export default async function PhotographyPage() {
+  const photos = await getPhotoSources()
+
   return (
     <main className="mx-auto max-w-6xl px-4 py-12">
-      <h1 className="text-4xl font-bold mb-6">Photography</h1>
-      <p className="text-muted-foreground mb-10">
-        A small selection of shots. All images are local for fast loads.
-      </p>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {PHOTOGRAPHY_COLLECTION.map(photo => (
-          <figure key={photo.slug} className="rounded-lg overflow-hidden border">
-            <Image
-              src={photo.src}
-              alt={photo.title}
-              width={photo.width}
-              height={photo.height}
-              className="h-64 w-full object-cover"
-              sizes="(max-width: 1024px) 100vw, 33vw"
-              priority={false}
-            />
-            <figcaption className="p-3">
-              <div className="font-medium">{photo.title}</div>
-              <div className="text-sm text-muted-foreground">
-                {photo.tags.join(" · ")}
-              </div>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
+      <PhotoGallery photos={photos} />
     </main>
   )
 }

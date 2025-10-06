@@ -243,39 +243,3 @@ export const SKILLS = [
     items: ['Data Structures & Algorithms', 'Distributed Systems', 'Computer Vision', 'SLAM', 'Sensor Fusion']
   }
 ]
-
-export type PhotoItem = {
-  title: string
-  slug: string
-  src: string
-  tags: string[]
-  width: number
-  height: number
-}
-
-export const PHOTOGRAPHY_COLLECTION: PhotoItem[] = [
-  {
-    title: "Artist's Bluff",
-    slug: "artists-bluff",
-    src: "/images/photography/artists-bluff.jpg",
-    tags: ["landscape","NH"],
-    width: 2048,
-    height: 1365,
-  },
-  {
-    title: "Golden Gate Twilight",
-    slug: "golden-gate-twilight",
-    src: "/images/photography/golden-gate-twilight.jpg",
-    tags: ["city","SF"],
-    width: 2048,
-    height: 1365,
-  },
-  {
-    title: "Prairie Storm",
-    slug: "prairie-storm",
-    src: "/images/photography/prairie-storm.jpg",
-    tags: ["weather","IL"],
-    width: 2048,
-    height: 1365,
-  },
-]
