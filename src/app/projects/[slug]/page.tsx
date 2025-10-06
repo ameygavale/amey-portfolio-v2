@@ -132,8 +132,8 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
               </div>
             </div>
 
-            {project.image && (
-              <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-muted md:max-w-md">
+            <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-muted md:max-w-md">
+              {project.image ? (
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -141,8 +141,12 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
                   className="object-cover"
                   sizes="(min-width: 768px) 400px, 100vw"
                 />
-              </div>
-            )}
+              ) : (
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-muted to-muted/60 text-sm font-medium text-muted-foreground">
+                  Visual coming soon
+                </div>
+              )}
+            </div>
           </div>
         </section>
         <section className="mt-10 rounded-3xl border border-border bg-card p-8 shadow-xl md:p-12">

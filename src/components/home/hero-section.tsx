@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-motion'
@@ -40,6 +40,53 @@ export function HeroSection({ site }: HeroSectionProps) {
   const spotlightBackground = useMotionTemplate`
     radial-gradient(650px circle at ${spotlightX}% ${spotlightY}%, rgba(56,189,248, ${spotlightIntensity}), transparent 70%)
   `
+
+  const [typedDescription, setTypedDescription] = useState(site.description)
+  const [shouldBlinkCaret, setShouldBlinkCaret] = useState(true)
+
+  // Animate hero description with a CLI-style typing effect while respecting reduced motion preferences.
+  useEffect(() => {
+    const fullText = site.description
+
+    if (!fullText) {
+      setTypedDescription('')
+      setShouldBlinkCaret(false)
+      return
+    }
+
+    const supportsMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+    const prefersReducedMotion = supportsMatchMedia
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false
+
+    if (prefersReducedMotion) {
+      setTypedDescription(fullText)
+      setShouldBlinkCaret(false)
+      return
+    }
+
+    let currentIndex = 0
+    let timeoutId: ReturnType<typeof setTimeout>
+
+    setShouldBlinkCaret(true)
+
+    const typeNext = () => {
+      const nextIndex = currentIndex + 1
+      setTypedDescription(fullText.slice(0, nextIndex))
+      currentIndex = nextIndex
+
+      if (currentIndex < fullText.length) {
+        timeoutId = setTimeout(typeNext, 45)
+      }
+    }
+
+    setTypedDescription('')
+    timeoutId = setTimeout(typeNext, 120)
+
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [site.description])
 
   const handlePointerMove = useCallback(
     (event: React.PointerEvent<HTMLElement>) => {
@@ -165,8 +212,21 @@ export function HeroSection({ site }: HeroSectionProps) {
             <h1 className="text-4xl font-semibold leading-tight text-foreground md:text-6xl">
               {site.name}
             </h1>
-            <p className="text-lg text-muted-foreground md:text-xl">
-              {site.description}
+            <p
+              className="text-lg font-mono text-muted-foreground md:text-xl"
+              aria-live="polite"
+            >
+              {typedDescription}
+              <motion.span
+                aria-hidden="true"
+                className={`inline-block h-5 w-[0.55ch] translate-y-[3px] rounded-sm bg-primary md:h-6 ${typedDescription ? 'ml-2' : ''}`}
+                animate={shouldBlinkCaret ? { opacity: [0, 1, 0] } : { opacity: 1 }}
+                transition={
+                  shouldBlinkCaret
+                    ? { duration: 0.8, ease: 'easeInOut', repeat: Infinity }
+                    : { duration: 0 }
+                }
+              />
             </p>
           </motion.div>
 

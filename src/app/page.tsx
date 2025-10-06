@@ -29,10 +29,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl space-y-3">
-              <h2 className="text-3xl font-semibold text-foreground md:text-4xl">Technical Toolkit</h2>
-              <p className="text-base text-muted-foreground md:text-lg">
-                Breadth across autonomy, perception, and software infrastructure lets me deliver reliable, end-to-end robotics capabilities.
-              </p>
+              <h2 className="text-3xl font-semibold text-foreground md:text-4xl">Skills</h2>
             </div>
             <Button
               asChild
@@ -82,7 +79,7 @@ export default function Home() {
           <div className="mb-12 max-w-3xl">
             <h2 className="text-3xl font-semibold text-foreground md:text-4xl">Education</h2>
             <p className="mt-3 text-muted-foreground">
-              Academic foundation grounded in robotics, controls, and systems engineering.
+              Academic foundation grounded in Autonomy, Artificial Intelligence and Hardware Systems.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2">
@@ -96,6 +93,9 @@ export default function Home() {
                   {entry.startDate} – {entry.endDate}
                 </p>
                 <h3 className="relative mt-3 text-xl font-semibold text-foreground md:text-2xl">{entry.degree}</h3>
+                {'major' in entry && entry.major && (
+                  <p className="relative text-sm font-medium text-foreground/80">{entry.major}</p>
+                )}
                 <p className="relative text-muted-foreground">{entry.school}</p>
                 <ul className="relative mt-5 space-y-3 text-sm text-muted-foreground">
                   {entry.details.map((detail) => (
