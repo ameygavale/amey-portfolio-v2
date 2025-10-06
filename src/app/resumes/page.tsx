@@ -1,17 +1,32 @@
 import fs from 'fs'
 import path from 'path'
 
-import Link from 'next/link'
-import { ArrowLeft, Download } from 'lucide-react'
+import { Download } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { SITE_CONFIG } from '@/lib/constants'
 
 type ResumeVariant = {
   title: string
   file: string
-  fileName: string
-  displayPath: string
+  summary: string
+}
+
+const resumeSummaries: Record<string, string> = {
+  mechanicalresume:
+    'Mechanical work blending FEA, CAD, and lean manufacturing to accelerate product cycles and boost reliability.\nLed automation upgrades that cut downtime by 20%+ while directing cross-functional build teams from concept through launch.',
+  roboticsresume:
+    'Robotics integration merging perception, control, and mechatronics to deliver autonomous systems that thrive off the bench.\nBuilt sensor-rich platforms, tuned motion pipelines, and shipped field-ready robots that lift productivity and safety.',
+  softwaredevelopmentresume:
+    'Software development shipping resilient web and AI products that scale to thousands of users with clean TypeScript.\nDrives end-to-end delivery architecture, DevOps, and experimentation to unlock speed, quality, and measurable growth.',
+  resumesde:
+    'Software development shipping resilient web and AI products that scale to thousands of users with clean TypeScript.\nDrives end-to-end delivery architecture, DevOps, and experimentation to unlock speed, quality, and measurable growth.',
+  // Handle existing file names that contain a common misspelling.
+  softwaredevelpmentresume:
+    'Software development shipping resilient web and AI products that scale to thousands of users with clean TypeScript.\nDrives end-to-end delivery architecture, DevOps, and experimentation to unlock speed, quality, and measurable growth.',
+}
+
+function normalizeTitle(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, '')
 }
 
 function getResumeVariants(): ResumeVariant[] {
@@ -29,12 +44,14 @@ function getResumeVariants(): ResumeVariant[] {
   return files.map((file) => {
     const title = file.replace(/\.pdf$/i, '')
     const encodedFileName = encodeURIComponent(file)
+    const normalizedTitle = normalizeTitle(title)
+    const normalizedWithoutName = normalizeTitle(title.replace(/amey\s+(vilas\s+)?gavale\s+/i, ''))
 
     return {
       title,
       file: `/resumes/${encodedFileName}`,
-      fileName: file,
-      displayPath: `/resumes/${file}`,
+      summary:
+        resumeSummaries[normalizedTitle] ?? resumeSummaries[normalizedWithoutName] ?? '',
     }
   })
 }
@@ -43,53 +60,31 @@ export default function ResumesPage() {
   const resumeVariants = getResumeVariants()
 
   return (
-    <main className="flex min-h-screen flex-col bg-background pb-24 pt-16 text-foreground">
-      <section className="container mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10 px-4">
-        <div className="flex items-center justify-between">
-          <Button asChild variant="ghost" size="sm" className="gap-2">
-            <Link href="/">
-              <ArrowLeft className="h-4 w-4" />
-              Back to portfolio
-            </Link>
-          </Button>
-          <span className="text-sm text-muted-foreground">{SITE_CONFIG.email}</span>
-        </div>
-
-        <div className="space-y-4 text-center">
-          <h1 className="text-3xl font-semibold md:text-4xl">Choose the resume you need</h1>
-          <p className="mx-auto max-w-2xl text-base text-muted-foreground md:text-lg">
-            Pick the PDF that matches what you need. Each file name below comes straight from{' '}
-            <code>public/resumes</code>{' '}so you always know which version you are sharing.
-          </p>
-        </div>
-
+    <main className="flex min-h-screen flex-col bg-background pb-24 pt-24 text-foreground">
+      <section className="container mx-auto flex w-full max-w-4xl flex-1 flex-col px-4">
         {resumeVariants.length === 0 ? (
-          <div className="rounded-3xl border border-dashed p-10 text-center text-sm text-muted-foreground">
-            No PDF resumes found yet. Drop your files into <code>public/resumes</code> and refresh this page.
+          <div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">
+            No resumes available right now.
           </div>
         ) : (
           <div className="grid flex-1 gap-6 md:grid-cols-3">
             {resumeVariants.map((variant) => (
               <article
                 key={variant.file}
-                className="flex flex-col justify-between rounded-3xl border bg-background p-6 text-left shadow-sm"
+                className="flex flex-col justify-between gap-6 rounded-3xl border bg-background p-6 text-left shadow-sm"
               >
-                <div className="space-y-3">
-                  <h2 className="text-xl font-semibold">{variant.title}</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Saved in <code>public/resumes</code> as <span className="font-medium">{variant.fileName}</span>. Use it for
-                    applications that call for this specific variant.
+                <h2 className="text-xl font-semibold">{variant.title}</h2>
+                {variant.summary ? (
+                  <p className="text-sm text-muted-foreground whitespace-pre-line">
+                    {variant.summary}
                   </p>
-                </div>
-                <div className="mt-6">
-                  <Button asChild className="w-full gap-2" size="lg">
-                    <a href={variant.file} download>
-                      <Download className="h-4 w-4" />
-                      Download PDF
-                    </a>
-                  </Button>
-                  <p className="mt-2 break-words text-xs text-muted-foreground">{variant.displayPath}</p>
-                </div>
+                ) : null}
+                <Button asChild className="w-full gap-2" size="lg">
+                  <a href={variant.file} download>
+                    <Download className="h-4 w-4" />
+                    Download PDF
+                  </a>
+                </Button>
               </article>
             ))}
           </div>

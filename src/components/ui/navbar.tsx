@@ -6,8 +6,6 @@ import { useEffect, useState } from 'react'
 
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 
-const FEATURE_ITEM = { label: 'More', href: '/photography' }
-
 const NAV_ITEMS = [
   { label: 'Home', href: '/#hero' },
   { label: 'About', href: '/#about' },
@@ -16,6 +14,7 @@ const NAV_ITEMS = [
   { label: 'Projects', href: '/#projects' },
   { label: 'Education', href: '/#education' },
   { label: 'Contact', href: '/#contact' },
+  { label: 'More', href: '/photography' },
 ]
 
 export function Navbar() {
@@ -84,25 +83,10 @@ export function Navbar() {
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-white/10 bg-white/80 backdrop-blur-md transition-colors dark:border-white/5 dark:bg-background/80">
       <div className="container mx-auto px-3 md:px-4">
-        <div className="flex h-16 items-center gap-2 md:grid md:grid-cols-[1fr_auto_1fr] md:gap-0">
-          <div className="hidden items-center md:flex">
-            <Link
-              href={FEATURE_ITEM.href}
-              className={`text-sm font-medium transition-colors hover:text-accent ${
-                pathname === FEATURE_ITEM.href ? 'text-accent' : 'text-muted-foreground'
-              }`}
-            >
-              {FEATURE_ITEM.label}
-            </Link>
-          </div>
-          <div className="flex min-w-0 flex-1 items-center justify-start md:justify-center md:flex-none">
-            <div className="flex w-full max-w-full items-center gap-1 overflow-x-auto rounded-full border border-white/30 bg-white/75 p-1 shadow-[0_8px_30px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-colors dark:border-white/10 dark:bg-white/10 dark:shadow-[0_16px_40px_rgba(8,47,73,0.45)] md:w-auto md:overflow-visible">
-              <Link
-                href={FEATURE_ITEM.href}
-                className={`${getLinkClasses(pathname === FEATURE_ITEM.href)} md:hidden`}
-              >
-                {FEATURE_ITEM.label}
-              </Link>
+        <div className="grid h-16 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 md:gap-4">
+          <div aria-hidden="true" />
+          <div className="flex min-w-0 items-center justify-center">
+            <div className="flex w-full max-w-full items-center gap-1 overflow-x-auto rounded-full border border-white/30 bg-white/75 p-1 shadow-[0_8px_30px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-colors dark:border-white/10 dark:bg-white/10 dark:shadow-[0_16px_40px_rgba(8,47,73,0.45)] md:w-auto md:flex-initial md:overflow-visible">
               {NAV_ITEMS.map((item) => {
                 const isAnchor = item.href.startsWith('/#')
                 const isActive = isAnchor
@@ -123,7 +107,7 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="flex shrink-0 items-center justify-end">
+          <div className="flex items-center justify-end">
             <ThemeToggle />
           </div>
         </div>

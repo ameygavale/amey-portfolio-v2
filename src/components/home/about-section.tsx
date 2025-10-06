@@ -24,7 +24,7 @@ export function AboutSection() {
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          I am robotics engineer focused on building autonomous systems that work reliably in the real world. My experience spans perception, planning, and control for unmanned vehicles integrating sensors, Deep Learning, and embedded systems into cohesive autonomy stacks. I have worked on projects including the Unmanned Surface Vehicle, Autonomous Farming Systems, Autonomous Vehicles, and stereo vision and mapping systems for field robotics. My goal is to turn cutting-edge research into deployable systems that advance autonomy.
+          Initiated my journey with Mechanical Engineering at Pune, where I learned how machines move. Got hooked on intelligence by earning a Postgraduate Diploma in Artificial Intelligence, automated systems at Accenture, and then leveled up with a Master&apos;s in Autonomy & Robotics at UIUC in collaboration with GE Aerospace Research. Now, as a researcher at UIUC, I build robots that actually work in the wild, designing autonomy for air, land, and water systems using stereo vision, motion planning, and control.
         </motion.p>
         <div
           aria-hidden

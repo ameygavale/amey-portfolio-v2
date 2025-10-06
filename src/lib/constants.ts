@@ -2,7 +2,8 @@ export const SITE_CONFIG = {
   name: 'Amey Vilas Gavale',
   shortName: 'AVG',
   tagline: 'Autonomy & Robotics Engineer',
-  description: 'Actively seeking Full Time Opportunities in Software, Robotics and Autonomy in the United States.',
+  description:
+    'Robotics engineer specializing in autonomy, perception, and software integration for intelligent systems.',
   url: 'https://ameygavale.portfolio',
   github: 'https://github.com/ameygavale',
   linkedin: 'https://www.linkedin.com/in/ameygavale/',
@@ -176,7 +177,7 @@ export const EXPERIENCE = [
       'Built benchmarking pipeline for ORB-SLAM3 and OpenVSLAM on EuRoC datasets using evo (APE/RPE) to enable reproducible localization accuracy comparisons.',
       'Configured multi-environment deployments (Ubuntu 22.04, Docker, ROS wrappers), resolving build, dependency, and visualization issues from Iridescence to Pangolin viewer.',
       'Analyzed trajectory errors and optimized SLAM parameters, improving localization robustness by 8%.',
-      'Prototyped fusion strategies including weighted averaging and LSTM-based temporal fusionto integrate outputs from multiple SLAM frameworks into an optimal trajectory estimate.'
+      'Prototyped fusion strategies including weighted averaging and LSTM-based temporal fusion to integrate outputs from multiple SLAM frameworks into an optimal trajectory estimate.'
     ]
   },
   {
