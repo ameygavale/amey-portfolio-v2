@@ -9,7 +9,7 @@ export const SITE_CONFIG = {
   linkedin: 'https://www.linkedin.com/in/ameygavale/',
   email: 'ameygavale@gmail.com',
   phone: '(708) 621-8981',
-  location: 'Champaign, IL',
+  location: 'Mountain View, CA',
   headshotUrl: '/images/photo.jpg',
 }
 
@@ -155,10 +155,21 @@ export const PROJECTS: ProjectConfig[] = [
 
 export const EXPERIENCE = [
   {
+    company: 'Matic Robotics',
+    role: 'Robotics Intern',
+    startDate: 'Dec 2025',
+    endDate: 'Jan 2026',
+    location: 'Mountain View, CA',
+    achievements: [
+      'Calibrated and validated microphone arrays, IMUs, and vision sensors during every robot crown test, stabilizing multi-sensor mapping inputs across the ~600-robot/week validation pipeline and keeping false-failure retests to a minimum.',
+      'Diagnosed hardware, sensor, and integration defects via combined HIL testing, qualitative inspection, and quantitative data analysis to keep the ~600 robots/week production scale-up on schedule.'
+    ]
+  },
+  {
     company: 'NextGen Embodied AI Solutions Lab, University of Illinois Urbana-Champaign',
     role: 'Graduate Research Assistant (Robotics Software Engineer)',
     startDate: 'Jan 2025',
-    endDate: 'Present',
+    endDate: 'Dec 2025',
     location: 'Champaign, IL',
     achievements: [
       'Designed and simulated the digital twin autonomous docking algorithm for the BlueBoat USV in Gazebo ahead of ROS2 deployment, reducing integration time by 20%.',
