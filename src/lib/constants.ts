@@ -155,14 +155,15 @@ export const PROJECTS: ProjectConfig[] = [
 
 export const EXPERIENCE = [
   {
-    company: 'Matic Robotics',
-    role: 'Robotics Intern',
+    company: 'Matic Robots',
+    role: 'Robotics Winter Intern',
     startDate: 'Dec 2025',
     endDate: 'Jan 2026',
-    location: 'Mountain View, CA',
+    location: 'Mountain View, CA, USA',
     achievements: [
       'Calibrated and validated microphone arrays, IMUs, and vision sensors during every robot crown test, stabilizing multi-sensor mapping inputs across the ~600-robot/week validation pipeline and keeping false-failure retests to a minimum.',
-      'Diagnosed hardware, sensor, and integration defects via combined HIL testing, qualitative inspection, and quantitative data analysis to keep the ~600 robots/week production scale-up on schedule.'
+      'Diagnosed hardware, sensor, and integration defects via combined HIL testing, qualitative inspection, and quantitative data analysis to keep the ~600 robots/week production scale-up on schedule.',
+      'Built and executed automated test cases for stereo and monocular camera calibration pipelines, achieving >98% validation pass rate and improving downstream system reliability.'
     ]
   },
   {
