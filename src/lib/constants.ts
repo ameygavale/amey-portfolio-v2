@@ -155,6 +155,19 @@ export const PROJECTS: ProjectConfig[] = [
 
 export const EXPERIENCE = [
   {
+    company: 'NextGen Embodied AI Solutions Lab, University of Illinois Urbana-Champaign',
+    role: 'Graduate Research Assistant (Robotics Software Engineer)',
+    startDate: 'Jan 2025',
+    endDate: 'Present',
+    location: 'Champaign, IL',
+    achievements: [
+      'Designed and simulated the digital twin autonomous docking algorithm for the BlueBoat USV in Gazebo ahead of ROS2 deployment, reducing integration time by 20%.',
+      'Integrated LiDAR point cloud processing, stereo vision, and sensor fusion with PID control, achieving a 90% docking success rate in trials.',
+      'Developed perception and navigation stacks for the AMiGA agriculture robot, improving phenotyping accuracy by 30% and navigation speed by 25% through stereo depth mapping and gRPC-based control.',
+      'Mentored three graduate and two undergraduate students on motion planning, perception workflows, and hardware-in-the-loop testing.'
+    ]
+  },
+  {
     company: 'Matic Robots',
     role: 'Robotics Winter Intern',
     startDate: 'Dec 2025',
@@ -164,19 +177,6 @@ export const EXPERIENCE = [
       'Calibrated and validated microphone arrays, IMUs, and vision sensors during every robot crown test, stabilizing multi-sensor mapping inputs across the ~600-robot/week validation pipeline and keeping false-failure retests to a minimum.',
       'Diagnosed hardware, sensor, and integration defects via combined HIL testing, qualitative inspection, and quantitative data analysis to keep the ~600 robots/week production scale-up on schedule.',
       'Built and executed automated test cases for stereo and monocular camera calibration pipelines, achieving >98% validation pass rate and improving downstream system reliability.'
-    ]
-  },
-  {
-    company: 'NextGen Embodied AI Solutions Lab, University of Illinois Urbana-Champaign',
-    role: 'Graduate Research Assistant (Robotics Software Engineer)',
-    startDate: 'Jan 2025',
-    endDate: 'Dec 2025',
-    location: 'Champaign, IL',
-    achievements: [
-      'Designed and simulated the digital twin autonomous docking algorithm for the BlueBoat USV in Gazebo ahead of ROS2 deployment, reducing integration time by 20%.',
-      'Integrated LiDAR point cloud processing, stereo vision, and sensor fusion with PID control, achieving a 90% docking success rate in trials.',
-      'Developed perception and navigation stacks for the AMiGA agriculture robot, improving phenotyping accuracy by 30% and navigation speed by 25% through stereo depth mapping and gRPC-based control.',
-      'Mentored three graduate and two undergraduate students on motion planning, perception workflows, and hardware-in-the-loop testing.'
     ]
   },
   {
