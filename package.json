@@ -2,11 +2,14 @@
   "name": "amey-portfolio-v2",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.18.0",
   "scripts": {
     "dev": "next dev",
+    "dev:clean": "pnpm run clean && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "clean": "rm -rf .next node_modules/.cache",
     "optimize:photos": "node scripts/optimize-photography.mjs"
   },
   "dependencies": {

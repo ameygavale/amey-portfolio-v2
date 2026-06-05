@@ -6,7 +6,17 @@ import type { ProjectConfig } from '@/lib/constants'
 
 type ProjectCardProps = Pick<
   ProjectConfig,
-  'title' | 'description' | 'image' | 'technologies' | 'github' | 'demo' | 'category' | 'slug' | 'media' | 'videoLinks'
+  | 'title'
+  | 'description'
+  | 'image'
+  | 'technologies'
+  | 'github'
+  | 'demo'
+  | 'category'
+  | 'slug'
+  | 'media'
+  | 'videoLinks'
+  | 'caseStudy'
 >
 
 export function ProjectCard({
@@ -19,7 +29,8 @@ export function ProjectCard({
   category,
   slug,
   media,
-  videoLinks
+  videoLinks,
+  caseStudy
 }: ProjectCardProps) {
   const hasImage = Boolean(image)
   const normalizedVideoLinks = videoLinks?.filter(Boolean) ?? []
@@ -56,10 +67,15 @@ export function ProjectCard({
             </span>
           )}
         </Link>
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
           <span className="chip border-border/60 bg-background/80 text-foreground backdrop-blur-sm">
             {category}
           </span>
+          {caseStudy.highlightMetric && (
+            <span className="rounded-md border border-primary/30 bg-primary/10 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-primary backdrop-blur-sm">
+              {caseStudy.highlightMetric}
+            </span>
+          )}
         </div>
       </div>
 
@@ -119,7 +135,7 @@ export function ProjectCard({
           href={`/projects/${slug}`}
           className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
         >
-          View project details
+          Read case study
           <Play className="h-4 w-4" />
         </Link>
       </div>

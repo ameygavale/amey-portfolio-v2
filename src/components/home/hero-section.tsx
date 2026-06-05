@@ -7,12 +7,14 @@ import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-mot
 import { Github, Linkedin, MapPin, Download } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { trackEvent } from '@/lib/analytics'
 
 interface HeroSectionProps {
   site: {
     name: string
     shortName?: string
     tagline: string
+    hook: string
     description: string
     github: string
     linkedin: string
@@ -34,11 +36,11 @@ export function HeroSection({ site }: HeroSectionProps) {
     radial-gradient(650px circle at ${spotlightX}% ${spotlightY}%, rgba(56,189,248, ${spotlightIntensity}), transparent 70%)
   `
 
-  const [typedDescription, setTypedDescription] = useState(site.description)
+  const [typedDescription, setTypedDescription] = useState(site.hook)
   const [shouldBlinkCaret, setShouldBlinkCaret] = useState(true)
 
   useEffect(() => {
-    const fullText = site.description
+    const fullText = site.hook
 
     if (!fullText) {
       setTypedDescription('')
@@ -78,7 +80,7 @@ export function HeroSection({ site }: HeroSectionProps) {
     return () => {
       clearTimeout(timeoutId)
     }
-  }, [site.description])
+  }, [site.hook])
 
   const handlePointerMove = useCallback(
     (event: React.PointerEvent<HTMLElement>) => {
@@ -173,14 +175,6 @@ export function HeroSection({ site }: HeroSectionProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5, ease: 'easeOut' }}
           >
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="status-live rounded-md border border-border bg-muted/80 px-3 py-1.5">
-                stack online
-              </span>
-              <span className="module-label border border-border bg-muted/60 px-3 py-1.5">
-                {site.tagline}
-              </span>
-            </div>
             <h1 className="text-4xl font-semibold leading-tight text-foreground md:text-6xl">
               {site.name}
             </h1>
@@ -209,7 +203,7 @@ export function HeroSection({ site }: HeroSectionProps) {
             transition={{ delay: 0.3, duration: 0.4, ease: 'easeOut' }}
           >
             <Button asChild size="lg">
-              <Link href="/resumes">
+              <Link href="/resumes" onClick={() => trackEvent({ name: 'resume_download' })}>
                 <Download className="h-4 w-4" />
                 Download Resume
               </Link>

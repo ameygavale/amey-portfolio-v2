@@ -8,8 +8,8 @@ export default function ProjectsPage() {
         <div className="text-center mb-12">
           <h1 className="mb-4 text-4xl font-bold text-foreground">Projects</h1>
           <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
-            A collection of robotics and autonomy projects showcasing my work in 
-            autonomous systems, computer vision, and multi-agent coordination.
+            Case studies from field robotics, marine autonomy, and computer vision,
+            each with the problem, approach, measured results, and lessons learned.
           </p>
         </div>
 

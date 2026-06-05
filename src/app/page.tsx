@@ -1,20 +1,25 @@
-import { Mail, Linkedin, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { SectionHeader } from '@/components/ui/section-header'
 import { HeroSection } from '@/components/home/hero-section'
 import { ProjectsShowcase } from '@/components/home/projects-showcase'
 import { ExperienceSection } from '@/components/home/experience-section'
+import { VisionLabSection } from '@/components/home/vision-lab-section'
+import { ContactSection } from '@/components/home/contact-section'
 import {
   SITE_CONFIG,
   PROJECTS,
   EXPERIENCE,
   EDUCATION,
-  SKILLS
+  SKILLS,
 } from '@/lib/constants'
+import { getFeaturedPhotos } from '@/lib/photography'
 
-export default function Home() {
+export default async function Home() {
+  const featuredPhotos = await getFeaturedPhotos()
   const phoneHref = SITE_CONFIG.phone.replace(/[^\d+]/g, '')
+
   return (
     <main className="relative z-10 flex flex-col gap-24 pb-24">
       <HeroSection site={SITE_CONFIG} />
@@ -25,7 +30,7 @@ export default function Home() {
           <div className="ambient-glow absolute bottom-[-35%] left-[15%] h-80 w-80 bg-accent/15 blur-[130px]" />
         </div>
         <div className="container mx-auto px-4">
-          <SectionHeader module="Cap / Skills" title="Skills">
+          <SectionHeader module="Skills" title="Skills">
             <Button
               asChild
               variant="outline"
@@ -65,6 +70,8 @@ export default function Home() {
 
       <ProjectsShowcase projects={PROJECTS} />
 
+      <VisionLabSection photos={featuredPhotos} />
+
       <section id="education" className="relative py-20">
         <div className="pointer-events-none absolute inset-0 -z-10 dark:hidden">
           <div className="ambient-glow absolute right-[18%] top-8 h-64 w-64 bg-primary/20 blur-[150px]" />
@@ -72,7 +79,7 @@ export default function Home() {
         </div>
         <div className="container mx-auto px-4">
           <SectionHeader
-            module="Cal / Education"
+            module="Education"
             title="Education"
             description="Academic foundation grounded in Autonomy, Artificial Intelligence and Hardware Systems."
           />
@@ -105,65 +112,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact" className="relative py-20">
-        <div className="pointer-events-none absolute inset-0 -z-10 dark:hidden">
-          <div className="ambient-glow absolute left-[12%] top-[15%] h-64 w-64 bg-primary/20 blur-[150px]" />
-          <div className="ambient-glow absolute right-[18%] bottom-[-20%] h-72 w-72 bg-secondary/20 blur-[150px]" />
-        </div>
-        <div className="container mx-auto px-4">
-          <div className="panel-brackets relative overflow-hidden p-10">
-            <div className="pointer-events-none absolute -top-24 left-20 h-60 w-60 rounded-full bg-white/20 blur-[140px] opacity-40 dark:hidden" />
-            <div className="pointer-events-none absolute bottom-[-28%] right-10 h-72 w-72 rounded-full bg-black/30 blur-[120px] opacity-40 dark:hidden" />
-            <div className="relative grid gap-8 md:grid-cols-[2fr_1fr] md:items-center">
-              <div className="space-y-5">
-                <span className="module-label">I/O / Contact</span>
-                <h2 className="text-3xl font-semibold text-foreground md:text-4xl">Let&apos;s build the next robot together.</h2>
-                <p className="text-base text-muted-foreground md:text-lg">
-                  I&apos;m exploring full-time opportunities for 2025/26 focused on autonomy, perception, and multi-robot systems. If you&apos;re pushing the frontier of Autonomy &amp; Robotics, I&apos;d love to chat.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <Button asChild size="lg">
-                    <a href={`mailto:${SITE_CONFIG.email}`}>
-                      <Mail className="h-4 w-4" />
-                      Email Me
-                    </a>
-                  </Button>
-                  <Button asChild size="lg" variant="outline">
-                    <a href={SITE_CONFIG.linkedin} target="_blank" rel="noopener noreferrer">
-                      <Linkedin className="h-4 w-4" />
-                      Connect on LinkedIn
-                    </a>
-                  </Button>
-                </div>
-              </div>
-              <div className="panel space-y-3 p-6 font-mono text-xs">
-                <div className="flex items-center justify-between">
-                  <span className="telemetry text-muted-foreground">email</span>
-                  <a
-                    href={`mailto:${SITE_CONFIG.email}`}
-                    className="font-medium text-foreground hover:underline"
-                  >
-                    {SITE_CONFIG.email}
-                  </a>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="telemetry text-muted-foreground">phone</span>
-                  <a
-                    href={`tel:${phoneHref}`}
-                    className="font-medium text-foreground hover:underline"
-                  >
-                    {SITE_CONFIG.phone}
-                  </a>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="telemetry text-muted-foreground">loc</span>
-                  <span className="font-medium text-foreground">{SITE_CONFIG.location}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ContactSection
+        email={SITE_CONFIG.email}
+        phone={SITE_CONFIG.phone}
+        phoneHref={phoneHref}
+        linkedin={SITE_CONFIG.linkedin}
+        location={SITE_CONFIG.location}
+        calendarUrl={SITE_CONFIG.calendarUrl}
+      />
     </main>
   )
 }

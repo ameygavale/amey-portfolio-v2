@@ -26,14 +26,14 @@ export function ExperienceSection({ roles }: ExperienceSectionProps) {
     <section id="experience" className="container relative mx-auto px-4">
       <div className="ambient-glow absolute inset-x-0 top-16 -z-10 mx-auto h-64 w-64 bg-secondary/20 blur-[180px]" />
       <SectionHeader
-        module="Nav / Experience"
+        module="Experience"
         title="Experience"
         description="Leading autonomy projects from proof-of-concept to production deployments across agricultural, aerial, and automotive robotics domains."
       />
 
       <div className="panel-brackets grid gap-8 overflow-hidden p-8 md:grid-cols-[0.9fr_1.6fr]">
         <div className="relative flex flex-col gap-4">
-          <span className="module-label">Select role</span>
+          <span className="module-label">Role</span>
           <div className="relative mt-2 space-y-2">
             {roles.map((role, index) => {
               const isActive = index === activeIndex

@@ -36,7 +36,11 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
         <div className="ambient-glow absolute right-[12%] bottom-[-25%] h-80 w-80 bg-secondary/20 blur-[160px]" />
       </div>
       <div className="container mx-auto px-4">
-        <SectionHeader module="Sys / Projects" title="Featured Projects">
+        <SectionHeader
+          module="Projects"
+          title="Featured Projects"
+          description="Deep-dive case studies covering the problem, approach, measured results, and lessons from the field."
+        >
           <Button
             asChild
             variant="outline"

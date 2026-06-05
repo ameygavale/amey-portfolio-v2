@@ -11,9 +11,9 @@ const NAV_ITEMS = [
   { label: 'Skills', href: '/#skills' },
   { label: 'Experience', href: '/#experience' },
   { label: 'Projects', href: '/#projects' },
+  { label: 'Vision Lab', href: '/#vision-lab' },
   { label: 'Education', href: '/#education' },
   { label: 'Contact', href: '/#contact' },
-  { label: 'More', href: '/photography' },
 ]
 
 export function Navbar() {
@@ -107,7 +107,7 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center justify-end gap-3">
-            <span className="status-live hidden sm:inline-flex">nav ready</span>
+            <span className="status-live hidden sm:inline-flex">ready</span>
             <ThemeToggle />
           </div>
         </div>

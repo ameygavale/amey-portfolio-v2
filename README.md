@@ -22,4 +22,4 @@ Open [http://localhost:3000](http://localhost:3000) after the server starts. Edi
 
 ## Deployment Notes
 
-When deploying (Vercel, Netlify, Google Cloud Run, etc.), follow your hosting provider's standard Next.js deployment workflow—no additional media configuration is required.
+When deploying (Vercel, Netlify, Google Cloud Run, etc.), follow your hosting provider's standard Next.js deployment workflow. No additional media configuration is required.
