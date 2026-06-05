@@ -11,7 +11,7 @@ export default function ResumesPage() {
           Download my latest resume below.
         </p>
         <Button asChild size="lg" className="gap-2 w-full">
-          <a href="/resumes/Amey%20Gavale%20Resume.pdf" download>
+          <a href="/resumes/Amey_Gavale_Resume.pdf" download="Amey_Gavale_Resume.pdf">
             <Download className="h-4 w-4" />
             Download Resume
           </a>

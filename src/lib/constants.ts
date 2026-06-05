@@ -221,7 +221,7 @@ export const EDUCATION = [
   {
     school: 'College of Engineering Pune',
     degree: 'Post Graduate Diploma',
-    major: 'Data Science and AI',
+    major: 'Data Science and Artificial Intelligence',
     startDate: 'Aug 2021',
     endDate: 'Aug 2022',
     details: [
