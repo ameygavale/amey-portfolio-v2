@@ -8,76 +8,203 @@
   }
 }
 
-
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    --background: 210 18% 98%;
+    --foreground: 215 28% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 215 28% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 224 76% 39%;
+    --popover-foreground: 215 28% 12%;
+    --primary: 198 38% 36%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 209 24% 88%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 24% 94%;
-    --muted-foreground: 215 16% 35%;
-    --accent: 208 20% 92%;
-    --accent-foreground: 222 47% 11%;
+    --secondary: 210 16% 90%;
+    --secondary-foreground: 215 28% 12%;
+    --muted: 210 18% 94%;
+    --muted-foreground: 215 12% 38%;
+    --accent: 210 14% 92%;
+    --accent-foreground: 215 28% 12%;
+    --signal: 142 45% 38%;
+    --signal-foreground: 142 20% 96%;
     --destructive: 0 72% 44%;
     --destructive-foreground: 210 40% 98%;
-    --border: 210 20% 85%;
-    --input: 210 20% 85%;
-    --ring: 224 76% 39%;
-    --chart-1: 224 76% 39%;
-    --chart-2: 227 75% 52%;
-    --chart-3: 160 74% 44%;
-    --chart-4: 42 92% 56%;
-    --chart-5: 315 69% 48%;
-    --radius: 0.75rem;
+    --border: 210 16% 84%;
+    --input: 210 16% 84%;
+    --ring: 198 38% 36%;
+    --chart-1: 198 38% 36%;
+    --chart-2: 142 45% 38%;
+    --chart-3: 32 50% 48%;
+    --chart-4: 42 70% 50%;
+    --chart-5: 280 25% 50%;
+    --radius: 0.625rem;
   }
+
   .dark {
-    --background: 222 62% 7%;
-    --foreground: 210 56% 96%;
-    --card: 223 54% 10%;
-    --card-foreground: 210 56% 96%;
-    --popover: 223 54% 10%;
-    --popover-foreground: 210 56% 96%;
-    --primary: 191 95% 55%;
-    --primary-foreground: 220 68% 12%;
-    --secondary: 217 42% 18%;
-    --secondary-foreground: 210 56% 96%;
-    --muted: 220 40% 16%;
-    --muted-foreground: 218 24% 74%;
-    --accent: 292 54% 18%;
-    --accent-foreground: 210 56% 96%;
-    --destructive: 0 62% 34%;
-    --destructive-foreground: 210 56% 96%;
-    --border: 220 34% 22%;
-    --input: 220 34% 22%;
-    --ring: 192 95% 58%;
-    --chart-1: 192 95% 58%;
-    --chart-2: 267 76% 56%;
-    --chart-3: 162 74% 52%;
-    --chart-4: 315 69% 56%;
-    --chart-5: 42 92% 62%;
+    --background: 215 14% 7%;
+    --foreground: 210 12% 86%;
+    --card: 215 12% 10%;
+    --card-foreground: 210 12% 86%;
+    --popover: 215 12% 10%;
+    --popover-foreground: 210 12% 86%;
+    --primary: 195 24% 52%;
+    --primary-foreground: 215 14% 8%;
+    --secondary: 215 10% 14%;
+    --secondary-foreground: 210 10% 78%;
+    --muted: 215 10% 13%;
+    --muted-foreground: 215 8% 52%;
+    --accent: 215 10% 16%;
+    --accent-foreground: 210 12% 86%;
+    --signal: 142 38% 44%;
+    --signal-foreground: 142 15% 92%;
+    --destructive: 0 55% 45%;
+    --destructive-foreground: 210 12% 86%;
+    --border: 215 10% 18%;
+    --input: 215 10% 18%;
+    --ring: 195 24% 52%;
+    --chart-1: 195 24% 52%;
+    --chart-2: 142 38% 44%;
+    --chart-3: 32 35% 50%;
+    --chart-4: 42 40% 52%;
+    --chart-5: 280 20% 55%;
+    --radius: 0.5rem;
   }
 }
-
-
 
 @layer base {
   * {
     @apply border-border;
   }
+
   html {
     scroll-behavior: smooth;
   }
+
   body {
     @apply bg-background text-foreground antialiased;
     min-height: 100vh;
     background-color: hsl(var(--background));
+    background-image:
+      linear-gradient(hsl(var(--border) / 0.22) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.22) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-position: center top;
+  }
+
+  .dark body {
+    background-image:
+      radial-gradient(ellipse 100% 60% at 50% -20%, hsl(215 16% 11% / 0.85), transparent 55%),
+      linear-gradient(hsl(var(--border) / 0.35) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.35) 1px, transparent 1px);
+    background-size: auto, 28px 28px, 28px 28px;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-lg border border-border bg-card;
+  }
+
+  .panel-brackets {
+    @apply panel relative;
+  }
+
+  .panel-brackets::before,
+  .panel-brackets::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    opacity: 0.45;
+  }
+
+  .panel-brackets::before {
+    top: 10px;
+    left: 10px;
+    border-top: 1px solid hsl(var(--primary));
+    border-left: 1px solid hsl(var(--primary));
+  }
+
+  .panel-brackets::after {
+    right: 10px;
+    bottom: 10px;
+    border-right: 1px solid hsl(var(--primary));
+    border-bottom: 1px solid hsl(var(--primary));
+  }
+
+  .dark .panel {
+    box-shadow: inset 0 1px 0 0 hsl(210 12% 86% / 0.04);
+  }
+
+  .chip {
+    @apply rounded-md border border-border bg-muted px-2.5 py-1 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground;
+  }
+
+  .module-label {
+    @apply inline-flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground;
+  }
+
+  .module-label::before {
+    content: '';
+    display: inline-block;
+    height: 6px;
+    width: 6px;
+    border: 1px solid hsl(var(--primary) / 0.6);
+    background: hsl(var(--primary) / 0.15);
+  }
+
+  .status-live {
+    @apply inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground;
+  }
+
+  .status-live::before {
+    content: '';
+    display: inline-block;
+    height: 6px;
+    width: 6px;
+    border-radius: 9999px;
+    background: hsl(var(--signal));
+    box-shadow: 0 0 6px hsl(var(--signal) / 0.45);
+  }
+
+  .telemetry {
+    @apply font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground;
+  }
+
+  .frame-brackets {
+    @apply relative;
+  }
+
+  .frame-brackets::before,
+  .frame-brackets::after {
+    content: '';
+    position: absolute;
+    z-index: 10;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+
+  .frame-brackets::before {
+    top: 12px;
+    left: 12px;
+    border-top: 1px solid hsl(var(--foreground) / 0.35);
+    border-left: 1px solid hsl(var(--foreground) / 0.35);
+  }
+
+  .frame-brackets::after {
+    right: 12px;
+    bottom: 12px;
+    border-right: 1px solid hsl(var(--foreground) / 0.35);
+    border-bottom: 1px solid hsl(var(--foreground) / 0.35);
+  }
+
+  .ambient-glow {
+    @apply pointer-events-none absolute rounded-full blur-[150px];
+  }
+
+  .dark .ambient-glow {
+    display: none;
   }
 }

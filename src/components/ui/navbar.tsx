@@ -8,7 +8,6 @@ import { ThemeToggle } from '@/components/ui/theme-toggle'
 
 const NAV_ITEMS = [
   { label: 'Home', href: '/#hero' },
-  { label: 'About', href: '/#about' },
   { label: 'Skills', href: '/#skills' },
   { label: 'Experience', href: '/#experience' },
   { label: 'Projects', href: '/#projects' },
@@ -76,17 +75,17 @@ export function Navbar() {
   const getLinkClasses = (isActive: boolean) =>
     `relative rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ${
       isActive
-        ? 'bg-white text-slate-900 shadow-[0_6px_18px_rgba(15,23,42,0.18)] dark:bg-white/25 dark:text-white dark:shadow-[0_18px_36px_rgba(15,23,42,0.45)]'
-        : 'text-slate-700 hover:text-slate-900 hover:bg-white/60 dark:text-muted-foreground dark:hover:text-accent/80 dark:hover:bg-white/10'
+        ? 'bg-white text-slate-900 shadow-[0_6px_18px_rgba(15,23,42,0.18)] dark:bg-muted dark:text-foreground dark:shadow-none'
+        : 'text-slate-700 hover:text-slate-900 hover:bg-white/60 dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-muted/70'
     }`
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-white/10 bg-white/80 backdrop-blur-md transition-colors dark:border-white/5 dark:bg-background/80">
+    <nav className="sticky top-0 z-40 w-full border-b border-white/10 bg-white/80 backdrop-blur-md transition-colors dark:border-border dark:bg-background/95 dark:backdrop-blur-sm">
       <div className="container mx-auto px-3 md:px-4">
         <div className="grid h-16 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 md:gap-4">
           <div aria-hidden="true" />
           <div className="flex min-w-0 items-center justify-center">
-            <div className="flex w-full max-w-full items-center gap-1 overflow-x-auto rounded-full border border-white/30 bg-white/75 p-1 shadow-[0_8px_30px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-colors dark:border-white/10 dark:bg-white/10 dark:shadow-[0_16px_40px_rgba(8,47,73,0.45)] md:w-auto md:flex-initial md:overflow-visible">
+            <div className="flex w-full max-w-full items-center gap-1 overflow-x-auto rounded-full border border-white/30 bg-white/75 p-1 shadow-[0_8px_30px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-colors dark:border-border dark:bg-card dark:shadow-none dark:backdrop-blur-none md:w-auto md:flex-initial md:overflow-visible">
               {NAV_ITEMS.map((item) => {
                 const isAnchor = item.href.startsWith('/#')
                 const isActive = isAnchor
@@ -107,7 +106,8 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="flex items-center justify-end">
+          <div className="flex items-center justify-end gap-3">
+            <span className="status-live hidden sm:inline-flex">nav ready</span>
             <ThemeToggle />
           </div>
         </div>

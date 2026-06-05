@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
+import { SectionHeader } from '@/components/ui/section-header'
 import { ProjectCard } from '@/components/ui/project-card'
 import type { ProjectConfig } from '@/lib/constants'
 
@@ -30,26 +31,23 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
 
   return (
     <section id="projects" className="relative py-20">
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-70">
-        <div className="absolute left-[8%] top-10 h-72 w-72 rounded-full bg-primary/20 blur-[150px]" />
-        <div className="absolute right-[12%] bottom-[-25%] h-80 w-80 rounded-full bg-secondary/20 blur-[160px]" />
+      <div className="pointer-events-none absolute inset-0 -z-10 opacity-70 dark:hidden">
+        <div className="ambient-glow absolute left-[8%] top-10 h-72 w-72 bg-primary/20 blur-[150px]" />
+        <div className="ambient-glow absolute right-[12%] bottom-[-25%] h-80 w-80 bg-secondary/20 blur-[160px]" />
       </div>
       <div className="container mx-auto px-4">
-        <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div className="max-w-2xl space-y-3">
-            <h2 className="text-3xl font-semibold text-foreground md:text-4xl">Featured Projects</h2>
-          </div>
+        <SectionHeader module="Sys / Projects" title="Featured Projects">
           <Button
             asChild
             variant="outline"
-            className="border-white/20 bg-white/5 text-foreground hover:border-primary/60 hover:bg-primary/20 hover:text-foreground"
+            className="border-border bg-card text-foreground hover:border-primary/40 hover:bg-muted dark:hover:bg-muted"
           >
             <Link href="/projects">
               Explore project archive
               <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
-        </div>
+        </SectionHeader>
 
         <div className="mb-10 flex flex-wrap gap-3">
           {categories.map((category) => {
@@ -60,8 +58,8 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                 onClick={() => setActiveCategory(category)}
                 className={`rounded-full border px-4 py-1.5 text-sm font-medium transition ${
                   isActive
-                    ? 'border-primary/60 bg-primary/20 text-foreground shadow-[0_12px_32px_rgba(33,118,155,0.4)]'
-                    : 'border-white/10 bg-white/5 text-muted-foreground hover:border-primary/40 hover:text-foreground'
+                    ? 'border-primary/40 bg-muted text-foreground dark:border-primary/30'
+                    : 'border-border bg-card text-muted-foreground hover:border-primary/30 hover:text-foreground'
                 }`}
                 whileTap={{ scale: 0.94 }}
                 whileHover={{ y: -2 }}

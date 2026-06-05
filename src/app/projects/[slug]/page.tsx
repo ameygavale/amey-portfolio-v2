@@ -3,40 +3,9 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
 
+import { ProjectVideo } from '@/components/ui/project-video'
 import { PROJECTS } from '@/lib/constants'
-
-function getEmbeddedVideoUrl(url: string): string | null {
-  try {
-    const parsed = new URL(url)
-    const host = parsed.hostname.replace('www.', '')
-
-    if (host === 'youtu.be') {
-      const videoId = parsed.pathname.replace('/', '')
-      return videoId ? `https://www.youtube.com/embed/${videoId}` : null
-    }
-
-    if (host === 'youtube.com') {
-      if (parsed.pathname === '/watch') {
-        const videoId = parsed.searchParams.get('v')
-        return videoId ? `https://www.youtube.com/embed/${videoId}` : null
-      }
-
-      if (parsed.pathname.startsWith('/embed/')) {
-        return url
-      }
-
-      if (parsed.pathname.startsWith('/shorts/')) {
-        const segments = parsed.pathname.split('/')
-        const videoId = segments[segments.length - 1]
-        return videoId ? `https://www.youtube.com/embed/${videoId}` : null
-      }
-    }
-
-    return url
-  } catch {
-    return null
-  }
-}
+import { normalizeMediaPaths } from '@/lib/media'
 
 export function generateStaticParams() {
   return PROJECTS.map((project) => ({ slug: project.slug }))
@@ -64,7 +33,9 @@ export function generateMetadata({ params }: ProjectPageProps) {
 
 export default function ProjectDetailPage({ params }: ProjectPageProps) {
   const project = PROJECTS.find((item) => item.slug === params.slug) ?? notFound()
+  const mediaVideos = normalizeMediaPaths(project.media)
   const videoLinks = project.videoLinks?.filter(Boolean) ?? []
+  const hasVideos = mediaVideos.length > 0 || videoLinks.length > 0
 
   return (
     <main className="min-h-screen bg-background py-16">
@@ -151,42 +122,24 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
         </section>
         <section className="mt-10 rounded-3xl border border-border bg-card p-8 shadow-xl md:p-12">
           <h2 className="text-2xl font-semibold text-card-foreground">Project Videos</h2>
-          {videoLinks.length > 0 ? (
+          {hasVideos ? (
             <div className="mt-6 grid gap-6 md:grid-cols-2">
-              {videoLinks.map((link, index) => {
-                const embeddedUrl = getEmbeddedVideoUrl(link)
-                const title = `${project.title} video ${index + 1}`
-
-                return (
-                  <div
-                    key={`${link}-${index}`}
-                    className="flex flex-col gap-3"
-                  >
-                    {embeddedUrl ? (
-                      <div className="relative aspect-video overflow-hidden rounded-2xl bg-muted">
-                        <iframe
-                          src={embeddedUrl}
-                          title={title}
-                          loading="lazy"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowFullScreen
-                          className="h-full w-full"
-                        />
-                      </div>
-                    ) : (
-                      <a
-                        href={link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2 text-sm font-medium text-primary transition-colors hover:border-primary hover:text-primary/80"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                        Open video
-                      </a>
-                    )}
-                  </div>
-                )}
-              )}
+              {mediaVideos.map((src, index) => (
+                <div key={`${src}-${index}`} className="flex flex-col gap-3">
+                  <ProjectVideo
+                    src={src}
+                    title={`${project.title} video ${index + 1}`}
+                  />
+                </div>
+              ))}
+              {videoLinks.map((link, index) => (
+                <div key={`${link}-${index}`} className="flex flex-col gap-3">
+                  <ProjectVideo
+                    src={link}
+                    title={`${project.title} video ${mediaVideos.length + index + 1}`}
+                  />
+                </div>
+              ))}
             </div>
           ) : (
             <p className="mt-4 text-muted-foreground">Visuals coming soon.</p>

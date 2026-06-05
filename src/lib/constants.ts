@@ -9,7 +9,7 @@ export const SITE_CONFIG = {
   linkedin: 'https://www.linkedin.com/in/ameygavale/',
   email: 'ameygavale@gmail.com',
   phone: '(708) 621-8981',
-  location: 'Mountain View, CA',
+  location: 'Champaign, IL',
   headshotUrl: '/images/photo.jpg',
 }
 
@@ -19,7 +19,7 @@ export type ProjectConfig = {
   title: string
   description: string
   image?: string | null
-  media?: string | null
+  media?: string | string[] | null
   videoLinks?: string[]
   technologies: string[]
   github?: string
@@ -35,6 +35,7 @@ export const PROJECTS: ProjectConfig[] = [
     description:
       'Delivered the perception and navigation stack for the AMiGA phenotyping robot, enabling over-the-row canopy scans with stereo depth alignment and automated trait logging.',
     image: '/images/projects/amiga.jpg',
+    media: 'amiga_vid.mp4',
     videoLinks: ['https://youtu.be/uUrYV-Pjc2o?si=t7Rh3tMfkidtoS3q'],
     technologies: ['ROS2', 'Stereo Vision', 'Depth Mapping', 'Navigation'],
     github: '',
@@ -48,6 +49,7 @@ export const PROJECTS: ProjectConfig[] = [
     description:
       'Engineered a BlueBoat USV autonomy suite with mission planning, docking controller, and multi-sensor fusion that sustained reliable operations in wave-disturbed trials.',
     image: '/images/projects/blueboat.jpg',
+    media: 'blueboat_vid.mp4',
     videoLinks: ['https://youtu.be/6SlrlSspAqo?si=B_Cv_zZoPdQyid_P'],
     technologies: ['ROS2', 'Gazebo', 'Sensor Fusion', 'Marine Control'],
     github: '',
@@ -61,6 +63,7 @@ export const PROJECTS: ProjectConfig[] = [
     description:
       'Integrated LiDAR, stereo vision, and MPC-based control on the GEM e4 platform to deliver dependable lane keeping with real-time pedestrian detection in urban scenarios.',
     image: '/images/projects/gem.jpg',
+    media: ['gem1_vid.mp4', 'gem2_vid.mp4'],
     videoLinks: [
       'https://youtu.be/msFjLbViays?si=tW4hoYTwKkfxVb6y',
       'https://youtu.be/Vv8QWqIuXAg?si=-klAdv1BJEsuKisO'
@@ -155,16 +158,15 @@ export const PROJECTS: ProjectConfig[] = [
 
 export const EXPERIENCE = [
   {
-    company: 'NextGen Embodied AI Solutions Lab, University of Illinois Urbana-Champaign',
-    role: 'Graduate Research Assistant (Robotics Software Engineer)',
+    company: 'NextGen Embodied AI Solutions Lab, University of Illinois, Urbana Champaign',
+    role: 'Graduate Research Assistant',
     startDate: 'Jan 2025',
     endDate: 'Present',
     location: 'Champaign, IL',
     achievements: [
-      'Designed and simulated the digital twin autonomous docking algorithm for the BlueBoat USV in Gazebo ahead of ROS2 deployment, reducing integration time by 20%.',
-      'Integrated LiDAR point cloud processing, stereo vision, and sensor fusion with PID control, achieving a 90% docking success rate in trials.',
-      'Developed perception and navigation stacks for the AMiGA agriculture robot, improving phenotyping accuracy by 30% and navigation speed by 25% through stereo depth mapping and gRPC-based control.',
-      'Mentored three graduate and two undergraduate students on motion planning, perception workflows, and hardware-in-the-loop testing.'
+      'Architected a dual-branch real-time perception pipeline (UNet/MobileNetV2 semantic segmentation + vanishing point regression) with GNSS-camera EKF fusion in ROS2 for autonomous navigation on a mobile robot platform, improving perception accuracy by 30% and path-tracking speed by 25%.',
+      'Developed a multi-sensor perception and autonomous docking system for an unmanned surface vehicle in Gazebo; fused LiDAR, stereo vision, & IMU data with PID control, achieving 90% docking success rate.',
+      'Evaluated DINOv2 (ViT) foundation model as a PyTorch backbone replacement for MobileNetV2, improving segmentation generalization across domains; optimized inference via TensorRT for edge deployment on NVIDIA Jetson.'
     ]
   },
   {

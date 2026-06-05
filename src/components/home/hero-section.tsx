@@ -22,13 +22,6 @@ interface HeroSectionProps {
   }
 }
 
-const floatingIndicators = [
-  { delay: 0, top: '16%', left: '18%' },
-  { delay: 1.2, top: '68%', left: '68%' },
-  { delay: 0.9, top: '72%', left: '8%' },
-  { delay: 1.8, top: '38%', left: '88%' }
-]
-
 export function HeroSection({ site }: HeroSectionProps) {
   const spotlightX = useMotionValue(50)
   const spotlightY = useMotionValue(35)
@@ -44,7 +37,6 @@ export function HeroSection({ site }: HeroSectionProps) {
   const [typedDescription, setTypedDescription] = useState(site.description)
   const [shouldBlinkCaret, setShouldBlinkCaret] = useState(true)
 
-  // Animate hero description with a CLI-style typing effect while respecting reduced motion preferences.
   useEffect(() => {
     const fullText = site.description
 
@@ -119,51 +111,31 @@ export function HeroSection({ site }: HeroSectionProps) {
     >
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 dark:hidden"
         style={{ background: spotlightBackground }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
       />
 
-      <div className="pointer-events-none absolute inset-0 -z-20">
-        <div className="absolute -top-32 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-primary/25 blur-[140px]" />
-        <div className="absolute top-[46%] right-[-18%] h-[520px] w-[520px] rounded-full bg-secondary/25 blur-[160px]" />
-        <div className="absolute bottom-[-35%] left-[6%] h-[420px] w-[420px] rounded-full bg-accent/25 blur-[140px]" />
+      <div className="pointer-events-none absolute inset-0 -z-20 dark:hidden">
+        <div className="ambient-glow absolute -top-32 left-1/2 h-[520px] w-[520px] -translate-x-1/2 bg-primary/25 blur-[140px]" />
+        <div className="ambient-glow absolute top-[46%] right-[-18%] h-[520px] w-[520px] bg-secondary/25 blur-[160px]" />
+        <div className="ambient-glow absolute bottom-[-35%] left-[6%] h-[420px] w-[420px] bg-accent/25 blur-[140px]" />
       </div>
       <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-45"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-45 dark:hidden"
         style={{
           backgroundImage:
             'linear-gradient(120deg, rgba(145, 222, 255, 0.06) 0%, rgba(145, 222, 255, 0) 32%), linear-gradient(300deg, rgba(183, 149, 255, 0.05) 10%, rgba(183, 149, 255, 0) 48%)'
         }}
       />
       <div
-        className="pointer-events-none absolute inset-0 -z-[5] opacity-40"
+        className="pointer-events-none absolute inset-0 -z-[5] opacity-40 dark:hidden"
         style={{
           backgroundImage:
             'linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.035) 1px, transparent 1px)',
           backgroundSize: '120px 120px'
         }}
       />
-
-      {floatingIndicators.map((item, index) => (
-        <motion.span
-          key={index}
-          className="pointer-events-none absolute hidden rounded-full border border-primary/40 bg-primary/40 shadow-[0_0_25px_rgba(72,216,255,0.35)] backdrop-blur md:block"
-          style={{ width: 18, height: 18, top: item.top, left: item.left }}
-          initial={{ opacity: 0.25, scale: 0.8, y: -10 }}
-          animate={{
-            opacity: [0.28, 0.9, 0.28],
-            scale: [0.8, 1.24, 0.8],
-            y: [-14, 16, -14]
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: item.delay
-          }}
-        />
-      ))}
 
       <div className="container relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-16 px-4 text-center md:flex-row md:items-stretch md:gap-20 md:text-left">
         <motion.div
@@ -173,11 +145,11 @@ export function HeroSection({ site }: HeroSectionProps) {
           transition={{ delay: 0.1, duration: 0.7, ease: 'easeOut' }}
         >
           <motion.div
-            className="relative aspect-[3/4] w-full overflow-hidden rounded-[3rem] border border-white/10 bg-white/5 shadow-[0_40px_120px_rgba(32,74,109,0.45)] backdrop-blur-xl"
-            whileHover={{ scale: 1.04 }}
+            className="frame-brackets relative aspect-[3/4] w-full overflow-hidden rounded-lg border border-white/10 bg-white/5 shadow-[0_40px_120px_rgba(32,74,109,0.45)] backdrop-blur-xl dark:border-border dark:bg-card dark:shadow-none dark:backdrop-blur-none"
+            whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.45, ease: 'easeOut' }}
           >
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent dark:from-black/20" />
             <Image
               src={site.headshotUrl}
               alt={`Portrait of ${site.name}`}
@@ -201,25 +173,25 @@ export function HeroSection({ site }: HeroSectionProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5, ease: 'easeOut' }}
           >
-            <span className="inline-flex items-center gap-3 rounded-full border border-primary/40 bg-primary/15 px-5 py-2 text-sm font-medium text-primary">
-              <motion.span
-                className="h-2 w-2 rounded-full bg-primary"
-                animate={{ scale: [1, 1.5, 1] }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-              />
-              {site.tagline}
-            </span>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="status-live rounded-md border border-border bg-muted/80 px-3 py-1.5">
+                stack online
+              </span>
+              <span className="module-label border border-border bg-muted/60 px-3 py-1.5">
+                {site.tagline}
+              </span>
+            </div>
             <h1 className="text-4xl font-semibold leading-tight text-foreground md:text-6xl">
               {site.name}
             </h1>
             <p
-              className="text-lg font-mono text-muted-foreground md:text-xl"
+              className="font-mono text-base leading-relaxed text-muted-foreground md:text-lg"
               aria-live="polite"
             >
               {typedDescription}
               <motion.span
                 aria-hidden="true"
-                className={`inline-block h-5 w-[0.55ch] translate-y-[3px] rounded-sm bg-primary md:h-6 ${typedDescription ? 'ml-2' : ''}`}
+                className={`inline-block h-5 w-[0.55ch] translate-y-[3px] bg-signal md:h-6 ${typedDescription ? 'ml-2' : ''}`}
                 animate={shouldBlinkCaret ? { opacity: [0, 1, 0] } : { opacity: 1 }}
                 transition={
                   shouldBlinkCaret
@@ -245,18 +217,18 @@ export function HeroSection({ site }: HeroSectionProps) {
           </motion.div>
 
           <motion.div
-            className="flex flex-wrap items-center gap-6 py-2 text-sm text-muted-foreground md:py-3 md:text-base"
+            className="flex flex-wrap items-center gap-4 py-2 text-sm text-muted-foreground md:py-3 md:text-base"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.45, ease: 'easeOut' }}
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-2">
-              <MapPin className="h-4 w-4 text-primary" />
+            <span className="inline-flex items-center gap-2 rounded-md border border-white/5 bg-white/5 px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] dark:border-border dark:bg-muted">
+              <MapPin className="h-3.5 w-3.5 text-primary" />
               {site.location}
             </span>
             <Link
               href={site.github}
-              className="inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-2 transition hover:border-primary/50 hover:text-foreground"
+              className="inline-flex items-center gap-2 rounded-md border border-white/5 bg-white/5 px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] transition hover:border-primary/50 hover:text-foreground dark:border-border dark:bg-muted dark:hover:border-primary/40"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -265,7 +237,7 @@ export function HeroSection({ site }: HeroSectionProps) {
             </Link>
             <Link
               href={site.linkedin}
-              className="inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-2 transition hover:border-primary/50 hover:text-foreground"
+              className="inline-flex items-center gap-2 rounded-md border border-white/5 bg-white/5 px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] transition hover:border-primary/50 hover:text-foreground dark:border-border dark:bg-muted dark:hover:border-primary/40"
               target="_blank"
               rel="noopener noreferrer"
             >

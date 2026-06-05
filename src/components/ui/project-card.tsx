@@ -26,8 +26,8 @@ export function ProjectCard({
   const hasVideoMedia = Boolean(media) || normalizedVideoLinks.length > 0
 
   return (
-    <div className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 text-card-foreground transition-all duration-300 hover:-translate-y-2 hover:border-primary/40 hover:shadow-[0_22px_70px_rgba(28,96,132,0.45)]">
-      <div className="relative h-48 w-full overflow-hidden rounded-t-[2rem] bg-slate-900/20">
+    <div className="group panel-brackets relative overflow-hidden text-card-foreground transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 dark:hover:border-primary/30">
+      <div className="relative h-48 w-full overflow-hidden bg-muted">
         {hasImage ? (
           <Image
             src={image as string}
@@ -40,7 +40,7 @@ export function ProjectCard({
             Visual coming soon
           </div>
         )}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/15 to-transparent transition-opacity duration-300 group-hover:from-slate-950/85 group-hover:via-slate-950/25" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent dark:from-black/40" />
         <Link
           href={`/projects/${slug}`}
           className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100"
@@ -57,7 +57,7 @@ export function ProjectCard({
           )}
         </Link>
         <div className="absolute top-4 right-4">
-          <span className="rounded-full border border-white/20 bg-black/70 px-3 py-1 text-xs font-semibold tracking-[0.18em] text-white shadow-lg">
+          <span className="chip border-border/60 bg-background/80 text-foreground backdrop-blur-sm">
             {category}
           </span>
         </div>
@@ -71,7 +71,7 @@ export function ProjectCard({
           {technologies.map((tech) => (
             <span
               key={tech}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium tracking-[0.12em] text-muted-foreground"
+              className="chip"
             >
               {tech}
             </span>
