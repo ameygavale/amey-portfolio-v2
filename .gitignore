@@ -35,5 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# media
+# large local-only project videos (use public/project-media/ for deployed assets)
 public/videos/

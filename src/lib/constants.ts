@@ -35,7 +35,7 @@ export const PROJECTS: ProjectConfig[] = [
     description:
       'Delivered the perception and navigation stack for the AMiGA phenotyping robot, enabling over-the-row canopy scans with stereo depth alignment and automated trait logging.',
     image: '/images/projects/amiga.jpg',
-    media: 'amiga_vid.mp4',
+    media: '/project-media/amiga_vid.mp4',
     videoLinks: ['https://youtu.be/uUrYV-Pjc2o?si=t7Rh3tMfkidtoS3q'],
     technologies: ['ROS2', 'Stereo Vision', 'Depth Mapping', 'Navigation'],
     github: '',
