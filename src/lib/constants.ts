@@ -396,10 +396,22 @@ export const PROJECTS: ProjectConfig[] = [
 
 export const EXPERIENCE = [
   {
+    company: 'Coordinated Science Laboratory, Center for Autonomy, University of Illinois, Urbana Champaign',
+    role: 'Research Engineer',
+    startDate: 'Jul 2026',
+    endDate: 'Present',
+    location: 'Urbana, IL, USA',
+    achievements: [
+      'Researching and developing autonomous capabilities for Crazyflie nano-drones, focusing on reinforcement learning and vision-based control.',
+      'Designing a Turtle Mode for autonomous self-recovery, enabling drones to right themselves and resume operation after inversion.',
+      'Building a multi-drone testing framework for training reinforcement learning policies on real hardware, reducing reliance on simulation.'
+    ]
+  },
+  {
     company: 'NextGen Embodied AI Solutions Lab, University of Illinois, Urbana Champaign',
     role: 'Graduate Research Assistant',
     startDate: 'Jan 2025',
-    endDate: 'Present',
+    endDate: 'Jul 2026',
     location: 'Champaign, IL',
     achievements: [
       'Architected a dual-branch real-time perception pipeline (UNet/MobileNetV2 semantic segmentation + vanishing point regression) with GNSS-camera EKF fusion in ROS2 for autonomous navigation on a mobile robot platform, improving perception accuracy by 30% and path-tracking speed by 25%.',
