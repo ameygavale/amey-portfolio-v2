@@ -1,5 +1,9 @@
+import type { Metadata } from 'next'
+
 import { PROJECTS } from '@/lib/constants'
 import { ProjectCard } from '@/components/ui/project-card'
+
+export const metadata: Metadata = { alternates: { canonical: '/projects' } }
 
 export default function ProjectsPage() {
   return (

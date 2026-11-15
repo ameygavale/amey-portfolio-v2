@@ -28,7 +28,8 @@ export function generateMetadata({ params }: ProjectPageProps) {
 
   return {
     title: `${project.title} | Case Study`,
-    description: project.caseStudy.problem
+    description: project.caseStudy.problem,
+    alternates: { canonical: `/projects/${project.slug}` }
   }
 }
 

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { ArrowRight } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -15,6 +16,9 @@ import {
   SKILLS,
 } from '@/lib/constants'
 import { getFeaturedPhotos } from '@/lib/photography'
+
+
+export const metadata: Metadata = { alternates: { canonical: '/' } }
 
 export default async function Home() {
   const featuredPhotos = await getFeaturedPhotos()

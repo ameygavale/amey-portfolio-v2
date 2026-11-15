@@ -3,7 +3,10 @@ import type { Metadata } from 'next'
 import { PhotoGallery } from './photo-gallery'
 import { getPhotoSources } from '@/lib/photography'
 
-export const metadata: Metadata = { title: 'Photography' }
+export const metadata: Metadata = {
+  title: 'Photography',
+  alternates: { canonical: '/photography' }
+}
 
 export default async function PhotographyPage() {
   const photos = await getPhotoSources()
