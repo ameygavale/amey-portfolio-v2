@@ -6,7 +6,7 @@ export const SITE_CONFIG = {
     'I build robots that see, navigate, and dock, from crop rows to open water.',
   description:
     'Robotics engineer specializing in autonomy, perception, and software integration for intelligent systems.',
-  url: 'https://ameygavale.portfolio',
+  url: 'https://amey-portfolio-v2.vercel.app',
   github: 'https://github.com/ameygavale',
   linkedin: 'https://www.linkedin.com/in/ameygavale/',
   email: 'ameygavale@gmail.com',
