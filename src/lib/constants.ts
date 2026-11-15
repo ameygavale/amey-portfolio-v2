@@ -400,7 +400,7 @@ export const EXPERIENCE = [
     role: 'Research Engineer',
     startDate: 'Jul 2026',
     endDate: 'Present',
-    location: 'Urbana, IL, USA',
+    location: 'Champaign, IL',
     achievements: [
       'Researching and developing autonomous capabilities for Crazyflie nano-drones, focusing on reinforcement learning and vision-based control.',
       'Designing a Turtle Mode for autonomous self-recovery, enabling drones to right themselves and resume operation after inversion.',
