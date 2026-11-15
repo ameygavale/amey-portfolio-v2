@@ -62,38 +62,39 @@ export const PROJECTS: ProjectConfig[] = [
   {
     id: 1,
     slug: 'over-the-crop-canopy-phenotyping-robot',
-    title: 'Development of Over The Crop Canopy Phenotyping Robot (AFS)',
+    title: 'Real-Time Perception & Sensor-Fusion Navigation for an Autonomous Field Robot',
     description:
-      'Delivered the perception and navigation stack for the AMiGA phenotyping robot, enabling automated over-the-row canopy imaging with stereo depth alignment and trait logging.',
+      'Built a ROS 2 perception pipeline (U-Net/MobileNetV2 segmentation, vanishing-point regression, GNSS-camera EKF fusion) for an autonomous farm vehicle, improving perception accuracy by 30% and path-tracking speed by 25%.',
     image: '/images/projects/amiga.jpg',
     media: '/project-media/amiga_vid.mp4',
     videoLinks: ['https://youtu.be/uUrYV-Pjc2o?si=t7Rh3tMfkidtoS3q'],
-    technologies: ['ROS2', 'Stereo Vision', 'Depth Mapping', 'Navigation'],
+    technologies: ['ROS2', 'U-Net', 'MobileNetV2', 'DINOv2', 'EKF', 'GNSS'],
     github: '',
     demo: '',
     category: 'Field Robotics',
     caseStudy: {
       problem:
-        'Agricultural phenotyping robots must drive row-by-row and capture canopy images without damaging plants, while maintaining accurate depth alignment and trait logging across uneven terrain and changing lighting.',
+        'An autonomous farm vehicle needs to understand where it can drive and hold its path along crop rows in real time. Camera-only perception is sensitive to changing field conditions, and GNSS alone is not enough to keep the vehicle accurately on track.',
       role:
-        'Owned the perception and navigation stack for the AMiGA phenotyping platform: stereo depth alignment, canopy image capture, and ROS2 integration for automated field runs.',
+        'Built the real-time ROS 2 perception and sensor-fusion pipeline for the autonomous farm vehicle, from semantic segmentation and vanishing-point regression to GNSS-camera EKF fusion.',
       approach: [
-        'Built a stereo vision pipeline for over-the-row canopy depth mapping with real-time alignment correction.',
-        'Integrated navigation nodes in ROS2 to follow crop rows with minimal human intervention.',
-        'Automated trait logging so field operators could run repeatable phenotyping sessions without manual data capture.',
+        'Designed a dual-branch perception network: U-Net/MobileNetV2 semantic segmentation alongside vanishing-point regression to estimate the drivable path.',
+        'Fused GNSS with camera-based estimates in an Extended Kalman Filter to produce a stable state estimate for path tracking.',
+        'Evaluated DINOv2 (ViT) as a backbone replacement for MobileNetV2 to improve segmentation generalization across domains.',
+        'Integrated the full pipeline in ROS 2 for real-time autonomous navigation on the mobile robot platform.',
       ],
       results: [
-        { label: 'Drive pattern', value: 'Over-the-row' },
-        { label: 'Depth stack', value: 'Stereo aligned' },
-        { label: 'Platform', value: 'ROS2' },
+        { label: 'Perception accuracy', value: '+30%' },
+        { label: 'Path-tracking speed', value: '+25%' },
+        { label: 'Framework', value: 'ROS 2' },
       ],
       architecture:
-        'Camera feeds flow into a stereo depth node, fused with navigation waypoints along crop rows. Perception outputs drive trait logging and path corrections through a ROS2 action server.',
+        'Camera frames feed a shared encoder (MobileNetV2, with DINOv2 evaluated as an alternative) that drives two branches: a U-Net segmentation head and a vanishing-point regression head. Their outputs are fused with GNSS in an EKF, and the resulting state estimate drives path tracking through ROS 2.',
       lessonsLearned: [
-        'Field lighting shifts faster than lab datasets, so calibration drift needs continuous monitoring.',
-        'Navigation accuracy matters as much as perception quality when plants are inches away.',
+        'Fusing GNSS with vision gives a more reliable estimate than either sensor alone.',
+        'Foundation-model backbones like DINOv2 can generalize better across field conditions than lightweight backbones trained on a narrow dataset.',
       ],
-      highlightMetric: 'Row-by-row canopy imaging',
+      highlightMetric: '+30% perception accuracy',
     },
   },
   {
